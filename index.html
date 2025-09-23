@@ -1,0 +1,2216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SuccessFlow - Customer Success Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #1D4ED8;
+            --primary-white: #ffffff;
+            --accent-orange: #F97316;
+            --text-gray: #6B7280;
+            --dark-gray: #1F2937;
+            --light-gray: #F9FAFB;
+            --border-gray: #E5E7EB;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--dark-gray);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        .header {
+            background: var(--primary-white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .header.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark-gray);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-blue);
+        }
+
+        .nav-cta {
+            background: var(--primary-blue);
+            color: var(--primary-white);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .nav-cta:hover {
+            background: #1E40AF;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(29, 78, 216, 0.3);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--dark-gray);
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            color: var(--primary-white);
+            padding: 120px 0 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><polygon fill="rgba(255,255,255,0.05)" points="0,0 1000,300 1000,1000 0,700"/></svg>');
+            background-size: cover;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease 0.3s forwards;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease 0.6s forwards;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--accent-orange);
+            color: var(--primary-white);
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease 0.9s forwards;
+        }
+
+        .hero-cta:hover {
+            background: #EA580C;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(249, 115, 22, 0.4);
+        }
+
+        .secondary-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: transparent;
+            color: var(--primary-white);
+            padding: 1rem 2rem;
+            border: 2px solid var(--primary-white);
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-left: 1rem;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease 1.2s forwards;
+        }
+
+        .secondary-cta:hover {
+            background: var(--primary-white);
+            color: var(--primary-blue);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 0;
+            background: var(--light-gray);
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--dark-gray);
+        }
+
+        .features-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--text-gray);
+            margin-bottom: 4rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: var(--primary-white);
+            padding: 2.5rem;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px) rotateY(5deg);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary-blue), #3B82F6);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+            color: var(--primary-white);
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark-gray);
+        }
+
+        .feature-card p {
+            color: var(--text-gray);
+            line-height: 1.6;
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+            padding: 80px 0;
+            background: var(--primary-white);
+        }
+
+        .testimonials h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 4rem;
+            color: var(--dark-gray);
+        }
+
+        .testimonial-carousel {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .testimonial-track {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .testimonial {
+            min-width: 100%;
+            text-align: center;
+            padding: 0 2rem;
+        }
+
+        .testimonial-content {
+            font-size: 1.25rem;
+            font-style: italic;
+            color: var(--dark-gray);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .author-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-blue), #3B82F6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-white);
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        .author-info h4 {
+            font-weight: 600;
+            color: var(--dark-gray);
+        }
+
+        .author-info p {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--border-gray);
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .dot.active {
+            background: var(--primary-blue);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--dark-gray) 0%, #374151 100%);
+            color: var(--primary-white);
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .cta-content h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .cta-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark-gray);
+            color: var(--primary-white);
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h3 {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary-white);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul li a {
+            color: var(--text-gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--primary-white);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-white);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background: var(--primary-blue);
+            transform: translateY(-2px);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 2rem;
+            text-align: center;
+            color: var(--text-gray);
+        }
+
+        /* Advanced Animations */
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(29, 78, 216, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 40px rgba(29, 78, 216, 0.6);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 53%, 80%, 100% {
+                transform: translate3d(0,0,0);
+            }
+            40%, 43% {
+                transform: translate3d(0, -30px, 0);
+            }
+            70% {
+                transform: translate3d(0, -15px, 0);
+            }
+            90% {
+                transform: translate3d(0, -4px, 0);
+            }
+        }
+
+        @keyframes typewriter {
+            from {
+                width: 0;
+            }
+            to {
+                width: 100%;
+            }
+        }
+
+        @keyframes blink {
+            0%, 50% {
+                border-color: transparent;
+            }
+            51%, 100% {
+                border-color: var(--accent-orange);
+            }
+        }
+
+        @keyframes particles {
+            0% {
+                opacity: 0;
+                transform: translateY(100vh) rotate(0deg);
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100vh) rotate(360deg);
+            }
+        }
+
+        @keyframes morphBackground {
+            0%, 100% {
+                border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            }
+            50% {
+                border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+            }
+        }
+
+        /* Hero Background Animations */
+        @keyframes gridMove {
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(60px, 60px);
+            }
+        }
+
+        @keyframes orbFloat {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            33% {
+                transform: translate(30px, -20px) scale(1.1);
+            }
+            66% {
+                transform: translate(-20px, 15px) scale(0.9);
+            }
+        }
+
+        @keyframes particleFloat {
+            0%, 100% {
+                transform: translateY(0px) translateX(0px);
+                opacity: 0.3;
+            }
+            25% {
+                transform: translateY(-15px) translateX(5px);
+                opacity: 0.8;
+            }
+            50% {
+                transform: translateY(-25px) translateX(-10px);
+                opacity: 1;
+            }
+            75% {
+                transform: translateY(-10px) translateX(8px);
+                opacity: 0.6;
+            }
+        }
+
+        @keyframes geometricFloat {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-20px) rotate(90deg);
+            }
+            50% {
+                transform: translateY(-30px) rotate(180deg);
+            }
+            75% {
+                transform: translateY(-15px) rotate(270deg);
+            }
+        }
+
+        /* Enhanced existing animations */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            33% {
+                transform: translateY(-15px) rotate(120deg);
+            }
+            66% {
+                transform: translateY(-25px) rotate(240deg);
+            }
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg) scale(1);
+            }
+            50% {
+                transform: rotate(180deg) scale(1.1);
+            }
+            to {
+                transform: rotate(360deg) scale(1);
+            }
+        }
+
+        /* Parallax layers for background elements */
+        .parallax-slow {
+            animation: parallaxSlow 25s ease-in-out infinite;
+        }
+
+        .parallax-medium {
+            animation: parallaxMedium 18s ease-in-out infinite;
+        }
+
+        .parallax-fast {
+            animation: parallaxFast 12s ease-in-out infinite;
+        }
+
+        @keyframes parallaxSlow {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(20px, -10px); }
+        }
+
+        @keyframes parallaxMedium {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(-15px, 25px); }
+        }
+
+        @keyframes parallaxFast {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(30px, -20px); }
+        }
+
+        /* Globe 3D Animations */
+
+        @keyframes globeGlow {
+            0%, 100% {
+                opacity: 0.6;
+                transform: translate(-50%, -50%) scale(1);
+            }
+            50% {
+                opacity: 0.9;
+                transform: translate(-50%, -50%) scale(1.1);
+            }
+        }
+
+        @keyframes dataFloat {
+            0%, 100% {
+                transform: translateY(0px) scale(1);
+                opacity: 0.6;
+            }
+            25% {
+                transform: translateY(-15px) scale(1.2);
+                opacity: 1;
+            }
+            50% {
+                transform: translateY(-25px) scale(0.8);
+                opacity: 0.4;
+            }
+            75% {
+                transform: translateY(-10px) scale(1.1);
+                opacity: 0.8;
+            }
+        }
+
+        /* Globe Container Hover Effects */
+        .globe-container:hover .globe-3d {
+            animation-play-state: paused;
+            transform: rotateY(45deg) rotateX(15deg) scale(1.05);
+        }
+
+        .globe-container:hover .data-points > div {
+            animation-duration: 1s;
+            transform: scale(1.5);
+        }
+
+        /* Remove tilt animation for static globe */
+        .globe-container {
+            /* Static positioning - no animation */
+        }
+
+        /* Responsive Globe */
+        @media (max-width: 968px) {
+            .globe-container {
+                width: 400px !important;
+                height: 400px !important;
+            }
+
+            .globe-container svg {
+                width: 400px !important;
+                height: 400px !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .globe-container {
+                width: 300px !important;
+                height: 300px !important;
+            }
+
+            .globe-container svg {
+                width: 300px !important;
+                height: 300px !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .globe-container {
+                width: 250px !important;
+                height: 250px !important;
+                top: 60% !important;
+            }
+
+            .globe-container svg {
+                width: 250px !important;
+                height: 250px !important;
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .slide-left {
+            opacity: 0;
+            transform: translateX(-100px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .slide-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .slide-right {
+            opacity: 0;
+            transform: translateX(100px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .slide-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .scale-in {
+            opacity: 0;
+            transform: scale(0.5);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .scale-in.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Floating Elements */
+        .floating-shapes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .shape {
+            position: absolute;
+            opacity: 0.1;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .shape:nth-child(1) {
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+            animation-duration: 5s;
+        }
+
+        .shape:nth-child(2) {
+            top: 60%;
+            right: 15%;
+            animation-delay: 2s;
+            animation-duration: 7s;
+        }
+
+        .shape:nth-child(3) {
+            bottom: 20%;
+            left: 20%;
+            animation-delay: 4s;
+            animation-duration: 6s;
+        }
+
+        /* Particle Background */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: particles 15s linear infinite;
+        }
+
+        /* Animated Background Gradient */
+        .animated-bg {
+            background: linear-gradient(-45deg, #1D4ED8, #3B82F6, #6366F1, #8B5CF6);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Morphing Shapes */
+        .morphing-shape {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(45deg, rgba(29, 78, 216, 0.1), rgba(59, 130, 246, 0.1));
+            animation: morphBackground 8s ease-in-out infinite;
+            z-index: 1;
+        }
+
+        /* 3D Hover Effects */
+        .card-3d {
+            perspective: 1000px;
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .card-3d:hover {
+            transform: rotateY(15deg) rotateX(10deg) scale(1.05);
+        }
+
+        /* Glowing Effects */
+        .glow-on-hover {
+            transition: all 0.3s ease;
+        }
+
+        .glow-on-hover:hover {
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        /* Typing Animation */
+        .typewriter {
+            overflow: hidden;
+            border-right: 3px solid var(--accent-orange);
+            white-space: nowrap;
+            margin: 0 auto;
+            animation: typewriter 3s steps(30) 1s forwards, blink 1s infinite;
+            width: 0;
+        }
+
+        /* Counter Animation */
+        .counter {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            transition: all 0.3s ease;
+        }
+
+        /* Stagger Animation for Lists */
+        .stagger-item {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .stagger-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Parallax Effect */
+        .parallax {
+            transform: translateZ(0);
+            transition: transform 0.1s ease-out;
+        }
+
+        /* Floating Process Cards */
+        .floating-process-card {
+            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .floating-process-card:hover {
+            transform: translateY(-10px) scale(1.02) !important;
+        }
+
+        /* Fix for center card hover */
+        .floating-process-card.scale-in:hover {
+            transform: translateX(-50%) translateY(-10px) scale(1.02) !important;
+        }
+
+        .floating-process-card:hover > div {
+            box-shadow: 0 30px 60px rgba(0,0,0,0.15) !important;
+        }
+
+        /* Feature Tags */
+        .feature-tag:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.12) !important;
+        }
+
+        .feature-tag:hover div {
+            transform: scale(1.1);
+        }
+
+        /* Animated bars for charts */
+        .animated-bar {
+            transition: height 0.3s ease;
+        }
+
+        .animated-bar:hover {
+            height: 90% !important;
+        }
+
+        /* SVG Line Animation Enhancement */
+        @keyframes drawLine {
+            0% {
+                stroke-dasharray: 0, 1000;
+            }
+            100% {
+                stroke-dasharray: 1000, 0;
+            }
+        }
+
+        /* Mobile optimizations for floating cards */
+        @media (max-width: 768px) {
+            .floating-process-card {
+                position: static !important;
+                width: 100% !important;
+                margin-bottom: 2rem !important;
+                transform: none !important;
+            }
+
+            .how-it-works div[style*="height: 600px"] {
+                height: auto !important;
+            }
+
+            .feature-tag {
+                margin-bottom: 1rem;
+            }
+
+            /* Hero mobile optimizations */
+            .hero h1 {
+                font-size: 2.5rem !important;
+            }
+
+            .hero .fade-in:first-child {
+                margin-bottom: 1.5rem !important;
+            }
+
+            .hero .fade-in:nth-child(3) {
+                margin-bottom: 2rem !important;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .features h2,
+            .testimonials h2,
+            .cta-content h2 {
+                font-size: 2rem;
+            }
+
+            .feature-card {
+                padding: 2rem;
+            }
+
+            .secondary-cta {
+                margin-left: 0;
+                margin-top: 1rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .testimonial {
+                padding: 0 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            .hero {
+                padding: 100px 0 60px;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .features,
+            .testimonials,
+            .cta-section {
+                padding: 60px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container">
+            <nav class="nav">
+                <a href="#" class="logo">
+                    <img src="s4Logo.webp" alt="Success4" style="height: 40px; width: auto;">
+                </a>
+                <ul class="nav-links">
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#testimonials">Success Stories</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <a href="#" class="nav-cta">Book Demo</a>
+                <button class="mobile-menu-btn" id="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" style="background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%); color: var(--dark-gray); padding: 140px 0 100px; position: relative; overflow: hidden; perspective: 1200px;">
+
+        <!-- 3D Globe Container -->
+        <div class="globe-container" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 500px; height: 500px; pointer-events: none; z-index: 1;">
+
+            <!-- 3D Globe -->
+            <div class="globe-3d" style="position: relative; width: 100%; height: 100%; transform-style: preserve-3d;">
+
+                <!-- Globe Wireframe -->
+                <svg width="500" height="500" style="position: absolute; top: 0; left: 0;" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <radialGradient id="globeGradient" cx="50%" cy="30%">
+                            <stop offset="0%" style="stop-color:rgba(29, 78, 216, 0.15);stop-opacity:1" />
+                            <stop offset="70%" style="stop-color:rgba(29, 78, 216, 0.08);stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:rgba(29, 78, 216, 0.02);stop-opacity:1" />
+                        </radialGradient>
+
+                        <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:rgba(29, 78, 216, 0.3);stop-opacity:0" />
+                            <stop offset="50%" style="stop-color:rgba(29, 78, 216, 0.6);stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:rgba(29, 78, 216, 0.3);stop-opacity:0" />
+                        </linearGradient>
+                    </defs>
+
+                    <!-- Globe base circle -->
+                    <circle cx="250" cy="250" r="220" fill="url(#globeGradient)" stroke="none" opacity="0.4"/>
+
+                    <!-- Longitude lines -->
+                    <ellipse cx="250" cy="250" rx="220" ry="220" fill="none" stroke="rgba(29, 78, 216, 0.2)" stroke-width="1.5"/>
+
+                    <ellipse cx="250" cy="250" rx="190" ry="220" fill="none" stroke="rgba(29, 78, 216, 0.15)" stroke-width="1"/>
+
+                    <ellipse cx="250" cy="250" rx="150" ry="220" fill="none" stroke="rgba(29, 78, 216, 0.12)" stroke-width="1"/>
+
+                    <ellipse cx="250" cy="250" rx="100" ry="220" fill="none" stroke="rgba(29, 78, 216, 0.1)" stroke-width="1"/>
+
+                    <ellipse cx="250" cy="250" rx="50" ry="220" fill="none" stroke="rgba(29, 78, 216, 0.08)" stroke-width="1"/>
+
+                    <!-- Latitude lines -->
+                    <ellipse cx="250" cy="250" rx="220" ry="55" fill="none" stroke="rgba(29, 78, 216, 0.18)" stroke-width="1"/>
+                    <ellipse cx="250" cy="250" rx="220" ry="110" fill="none" stroke="rgba(29, 78, 216, 0.15)" stroke-width="1"/>
+                    <ellipse cx="250" cy="250" rx="220" ry="165" fill="none" stroke="rgba(29, 78, 216, 0.12)" stroke-width="1"/>
+
+                    <!-- Static connection points -->
+                    <circle cx="120" cy="180" r="3" fill="rgba(249, 115, 22, 0.8)">
+                        <animate attributeName="opacity" values="0.3;1;0.3" dur="2s" repeatCount="indefinite"/>
+                    </circle>
+
+                    <circle cx="380" cy="200" r="3" fill="rgba(16, 185, 129, 0.8)">
+                        <animate attributeName="opacity" values="0.3;1;0.3" dur="2.5s" repeatCount="indefinite"/>
+                    </circle>
+
+                    <circle cx="200" cy="120" r="3" fill="rgba(139, 92, 246, 0.8)">
+                        <animate attributeName="opacity" values="0.3;1;0.3" dur="3s" repeatCount="indefinite"/>
+                    </circle>
+
+                    <circle cx="300" cy="350" r="3" fill="rgba(29, 78, 216, 0.8)">
+                        <animate attributeName="opacity" values="0.3;1;0.3" dur="1.8s" repeatCount="indefinite"/>
+                    </circle>
+
+                    <circle cx="180" cy="300" r="3" fill="rgba(249, 115, 22, 0.6)">
+                        <animate attributeName="opacity" values="0.2;0.8;0.2" dur="2.2s" repeatCount="indefinite"/>
+                    </circle>
+
+                    <circle cx="320" cy="140" r="3" fill="rgba(16, 185, 129, 0.6)">
+                        <animate attributeName="opacity" values="0.2;0.8;0.2" dur="2.8s" repeatCount="indefinite"/>
+                    </circle>
+
+                    <!-- Pulse rings around connection points -->
+                    <circle cx="120" cy="180" r="8" fill="none" stroke="rgba(249, 115, 22, 0.4)" stroke-width="1">
+                        <animate attributeName="r" values="5;20;5" dur="3s" repeatCount="indefinite"/>
+                        <animate attributeName="opacity" values="0.8;0;0.8" dur="3s" repeatCount="indefinite"/>
+                    </circle>
+
+                    <circle cx="380" cy="200" r="8" fill="none" stroke="rgba(16, 185, 129, 0.4)" stroke-width="1">
+                        <animate attributeName="r" values="5;18;5" dur="3.5s" repeatCount="indefinite"/>
+                        <animate attributeName="opacity" values="0.8;0;0.8" dur="3.5s" repeatCount="indefinite"/>
+                    </circle>
+                </svg>
+
+                <!-- Globe Glow Effect -->
+                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 520px; height: 520px; border-radius: 50%; background: radial-gradient(circle, rgba(29, 78, 216, 0.08) 0%, transparent 70%); filter: blur(20px); animation: globeGlow 4s ease-in-out infinite alternate;"></div>
+
+            </div>
+
+            <!-- Floating Data Points -->
+            <div class="data-points" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+                <div style="position: absolute; top: 20%; left: 15%; width: 6px; height: 6px; background: rgba(249, 115, 22, 0.6); border-radius: 50%; animation: dataFloat 3s ease-in-out infinite;"></div>
+                <div style="position: absolute; top: 60%; right: 20%; width: 4px; height: 4px; background: rgba(16, 185, 129, 0.6); border-radius: 50%; animation: dataFloat 4s ease-in-out infinite 1s;"></div>
+                <div style="position: absolute; bottom: 30%; left: 30%; width: 5px; height: 5px; background: rgba(139, 92, 246, 0.6); border-radius: 50%; animation: dataFloat 3.5s ease-in-out infinite 2s;"></div>
+                <div style="position: absolute; top: 40%; right: 10%; width: 3px; height: 3px; background: rgba(29, 78, 216, 0.6); border-radius: 50%; animation: dataFloat 2.8s ease-in-out infinite 0.5s;"></div>
+            </div>
+
+        </div>
+
+        <div class="container">
+            <div class="hero-content" style="text-align: center; max-width: 900px; margin: 0 auto;">
+
+                <!-- Professional Badge -->
+                <div class="fade-in" style="display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(0, 0, 0, 0.08); padding: 0.75rem 1.25rem; border-radius: 50px; margin-bottom: 2rem; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);">
+                    <div style="width: 8px; height: 8px; background: #10B981; border-radius: 50%; animation: pulse 2s ease-in-out infinite;"></div>
+                    <span style="color: var(--text-gray); font-weight: 500; font-size: 0.9rem;">Created by Customer Success Leaders</span>
+                </div>
+
+                <!-- Main Heading -->
+                <h1 class="fade-in" style="font-size: 4rem; font-weight: 700; line-height: 1.1; margin-bottom: 2rem; color: var(--dark-gray); letter-spacing: -0.02em;">
+                    Complete Customer Success
+                    <span style="display: block;">Platform</span>
+                </h1>
+
+                <!-- Subtitle -->
+                <p class="fade-in" style="font-size: 1.3rem; color: var(--text-gray); margin-bottom: 3rem; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.5;">
+                    Empower your team with customizable tools, streamlined processes, and powerful integrations that drive engagement, retention, and growth.
+                </p>
+
+                <!-- CTA Section -->
+                <div class="fade-in" style="display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem;">
+                    
+                    <!-- <div style="display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(29, 78, 216, 0.05); border: 1px solid rgba(29, 78, 216, 0.1); padding: 0.75rem 1.25rem; border-radius: 50px; font-size: 0.9rem; color: var(--primary-blue); font-weight: 500;">
+                        <i class="fas fa-star" style="font-size: 0.8rem;"></i>
+                        Featured at SaaStr 2025 AI Demo Stage
+                    </div> -->
+
+                    <!-- Main CTA Button -->
+                    <a href="#" style="background: var(--dark-gray); color: white; padding: 1rem 2rem; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 1rem; transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 0.5rem; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);"
+                       onmouseover="this.style.background='#000000'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 25px rgba(0, 0, 0, 0.15)'"
+                       onmouseout="this.style.background='var(--dark-gray)'; this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(0, 0, 0, 0.1)'">
+                        Get Early Access
+                    </a>
+                </div>
+
+                <!-- Trust Indicators -->
+                <div class="fade-in" style="display: flex; justify-content: center; align-items: center; gap: 3rem; margin-top: 3rem; flex-wrap: wrap; opacity: 0.7;">
+                    <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; color: var(--text-gray);">
+                        <i class="fas fa-check-circle" style="color: #10B981;"></i>
+                        <span>40% Churn Reduction</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; color: var(--text-gray);">
+                        <i class="fas fa-check-circle" style="color: #10B981;"></i>
+                        <span>90% Automation</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; color: var(--text-gray);">
+                        <i class="fas fa-check-circle" style="color: #10B981;"></i>
+                        <span>500+ Enterprises</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section (Inspired by Centive) -->
+    <section class="how-it-works fade-in" style="padding: 80px 0; background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); position: relative; overflow: hidden;">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 4rem;">
+                <div style="display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(29, 78, 216, 0.1); padding: 0.5rem 1rem; border-radius: 20px; margin-bottom: 1rem;">
+                    <i class="fas fa-star" style="color: var(--primary-blue);"></i>
+                    <span style="color: var(--primary-blue); font-weight: 600; font-size: 0.9rem;">PLATFORM</span>
+                </div>
+                <h2 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; color: var(--dark-gray);">How Success4 Works</h2>
+                <p style="font-size: 1.2rem; color: var(--text-gray); max-width: 600px; margin: 0 auto;">Autonomous AI agents orchestrated as your digital customer success teammates</p>
+            </div>
+
+            <!-- Floating Cards Layout -->
+            <div style="position: relative; max-width: 1200px; margin: 0 auto; height: 600px;">
+                <!-- Left Card -->
+                <div class="floating-process-card slide-left" style="position: absolute; top: 50px; left: 0; width: 320px;">
+                    <div style="background: white; border-radius: 24px; padding: 2rem; box-shadow: 0 20px 40px rgba(0,0,0,0.08); position: relative; overflow: hidden;">
+                        <!-- Automation Badge -->
+                        <div style="position: absolute; top: -10px; left: 20px; background: linear-gradient(135deg, var(--primary-blue), #3B82F6); color: white; padding: 0.5rem 1rem; border-radius: 12px; font-size: 0.8rem; font-weight: 600;">
+                            90% Automation
+                        </div>
+
+                        <!-- Animated Chart -->
+                        <div style="margin: 2rem 0; height: 150px; display: flex; align-items: end; gap: 0.5rem; justify-content: center;">
+                            <div class="animated-bar" style="width: 20px; background: linear-gradient(to top, var(--primary-blue), #3B82F6); border-radius: 4px; height: 80%; animation: pulse 2s ease-in-out infinite;"></div>
+                            <div class="animated-bar" style="width: 20px; background: linear-gradient(to top, var(--primary-blue), #3B82F6); border-radius: 4px; height: 60%; animation: pulse 2s ease-in-out infinite 0.2s;"></div>
+                            <div class="animated-bar" style="width: 20px; background: linear-gradient(to top, var(--accent-orange), #F97316); border-radius: 4px; height: 100%; animation: pulse 2s ease-in-out infinite 0.4s;"></div>
+                            <div class="animated-bar" style="width: 20px; background: linear-gradient(to top, var(--primary-blue), #3B82F6); border-radius: 4px; height: 70%; animation: pulse 2s ease-in-out infinite 0.6s;"></div>
+                        </div>
+
+                        <h3 style="font-size: 1.3rem; font-weight: 600; margin-bottom: 1rem; color: var(--dark-gray);">Autonomous AI Agents</h3>
+                        <p style="color: var(--text-gray); line-height: 1.6; font-size: 0.95rem;">Deploy AI digital workers that proactively engage customers, complete tasks, and follow playbooks without manual effort.</p>
+
+                        <!-- Floating stat -->
+                        <div style="position: absolute; top: -15px; right: -15px; background: var(--accent-orange); color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.8rem; animation: float 3s ease-in-out infinite;">
+                            10x
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Center Card -->
+                <div class="floating-process-card scale-in" style="position: absolute; top: 120px; left: 50%; transform: translateX(-50%); width: 320px; z-index: 2;">
+                    <div style="background: white; border-radius: 24px; padding: 2rem; box-shadow: 0 25px 50px rgba(0,0,0,0.12); position: relative; border: 2px solid rgba(29, 78, 216, 0.1);">
+                        <!-- Pulse indicator -->
+                        <div style="position: absolute; top: 20px; right: 20px; width: 12px; height: 12px; background: #10B981; border-radius: 50%; animation: pulse 2s ease-in-out infinite;">
+                            <div style="position: absolute; top: -4px; left: -4px; width: 20px; height: 20px; background: rgba(16, 185, 129, 0.3); border-radius: 50%; animation: pulse 2s ease-in-out infinite 0.5s;"></div>
+                        </div>
+
+                        <!-- Animated Dashboard -->
+                        <div style="margin: 1rem 0 2rem; height: 120px; background: linear-gradient(135deg, #f8fafc, #e2e8f0); border-radius: 16px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
+                            <div style="position: absolute; top: 10px; left: 10px; width: 8px; height: 8px; background: var(--primary-blue); border-radius: 50%; animation: float 2s ease-in-out infinite;"></div>
+                            <div style="position: absolute; bottom: 15px; right: 20px; width: 6px; height: 6px; background: var(--accent-orange); border-radius: 50%; animation: float 2s ease-in-out infinite 1s;"></div>
+                            <i class="fas fa-chart-line" style="font-size: 2rem; color: var(--primary-blue); animation: pulse 3s ease-in-out infinite;"></i>
+                        </div>
+
+                        <h3 style="font-size: 1.3rem; font-weight: 600; margin-bottom: 1rem; color: var(--dark-gray);">Real-Time Intelligence</h3>
+                        <p style="color: var(--text-gray); line-height: 1.6; font-size: 0.95rem;">Your agents analyze signals continuously to surface insights, flag risks, and unlock revenue opportunities.</p>
+                    </div>
+                </div>
+
+                <!-- Right Card -->
+                <div class="floating-process-card slide-right" style="position: absolute; top: 50px; right: 0; width: 320px;">
+                    <div style="background: white; border-radius: 24px; padding: 2rem; box-shadow: 0 20px 40px rgba(0,0,0,0.08); position: relative;">
+                        <!-- Integration icons -->
+                        <div style="position: absolute; top: -10px; right: 20px; display: flex; gap: 0.5rem;">
+                            <div style="width: 32px; height: 32px; background: linear-gradient(135deg, var(--primary-blue), #3B82F6); border-radius: 8px; display: flex; align-items: center; justify-content: center; animation: float 3s ease-in-out infinite;">
+                                <i class="fas fa-home" style="color: white; font-size: 0.8rem;"></i>
+                            </div>
+                        </div>
+
+                        <!-- User avatars -->
+                        <div style="margin: 2rem 0; display: flex; justify-content: center; align-items: center; gap: 1rem; height: 150px; position: relative;">
+                            <div style="width: 50px; height: 50px; background: linear-gradient(135deg, var(--primary-blue), #3B82F6); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; animation: bounce 2s ease-in-out infinite;">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                                <div style="width: 40px; height: 40px; background: rgba(29, 78, 216, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; animation: bounce 2s ease-in-out infinite 0.3s;">
+                                    <i class="fas fa-user" style="color: var(--primary-blue); font-size: 0.8rem;"></i>
+                                </div>
+                                <div style="width: 40px; height: 40px; background: rgba(29, 78, 216, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; animation: bounce 2s ease-in-out infinite 0.6s;">
+                                    <i class="fas fa-user" style="color: var(--primary-blue); font-size: 0.8rem;"></i>
+                                </div>
+                            </div>
+                            <div style="width: 60px; height: 60px; background: rgba(249, 115, 22, 0.1); border: 2px solid var(--accent-orange); border-radius: 50%; display: flex; align-items: center; justify-content: center; animation: bounce 2s ease-in-out infinite 0.9s;">
+                                <i class="fas fa-user" style="color: var(--accent-orange); font-size: 1.2rem;"></i>
+                            </div>
+                        </div>
+
+                        <h3 style="font-size: 1.3rem; font-weight: 600; margin-bottom: 1rem; color: var(--dark-gray);">Seamless System Execution</h3>
+                        <p style="color: var(--text-gray); line-height: 1.6; font-size: 0.95rem;">Success4 agents integrate with your tools to update CRMs, send emails, track usage, and escalate issues.</p>
+                    </div>
+                </div>
+
+                <!-- Connecting lines animation -->
+                <svg style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1;" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" style="stop-color:var(--primary-blue);stop-opacity:0.3" />
+                            <stop offset="50%" style="stop-color:var(--accent-orange);stop-opacity:0.6" />
+                            <stop offset="100%" style="stop-color:var(--primary-blue);stop-opacity:0.3" />
+                        </linearGradient>
+                    </defs>
+                    <path d="M 300 200 Q 600 150 900 200" stroke="url(#lineGradient)" stroke-width="2" fill="none" stroke-dasharray="10,5" opacity="0.6">
+                        <animate attributeName="stroke-dashoffset" values="0;20;0" dur="3s" repeatCount="indefinite"/>
+                    </path>
+                    <path d="M 300 350 Q 600 400 900 350" stroke="url(#lineGradient)" stroke-width="2" fill="none" stroke-dasharray="10,5" opacity="0.6">
+                        <animate attributeName="stroke-dashoffset" values="20;0;20" dur="3s" repeatCount="indefinite"/>
+                    </path>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Background decorations -->
+        <div style="position: absolute; top: 10%; left: 5%; width: 100px; height: 100px; background: linear-gradient(45deg, rgba(29, 78, 216, 0.05), rgba(59, 130, 246, 0.05)); border-radius: 50%; animation: float 6s ease-in-out infinite;"></div>
+        <div style="position: absolute; bottom: 10%; right: 5%; width: 150px; height: 150px; background: linear-gradient(45deg, rgba(249, 115, 22, 0.05), rgba(251, 146, 60, 0.05)); border-radius: 30%; animation: float 8s ease-in-out infinite reverse;"></div>
+
+        <!-- Feature Tags Bottom -->
+        <div style="margin-top: 4rem; display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;">
+            <div class="feature-tag stagger-item" style="display: flex; align-items: center; gap: 0.75rem; background: white; padding: 1rem 1.5rem; border-radius: 50px; box-shadow: 0 8px 25px rgba(0,0,0,0.08); transition: all 0.3s ease;">
+                <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #ef4444, #dc2626); border-radius: 50%; display: flex; align-items: center; justify-content: center; animation: pulse 3s ease-in-out infinite;">
+                    <i class="fas fa-exclamation-triangle" style="color: white; font-size: 1rem;"></i>
+                </div>
+                <span style="font-weight: 600; color: var(--dark-gray); font-size: 0.95rem;">Predictive Risk Alerts</span>
+            </div>
+
+            <div class="feature-tag stagger-item" style="display: flex; align-items: center; gap: 0.75rem; background: white; padding: 1rem 1.5rem; border-radius: 50px; box-shadow: 0 8px 25px rgba(0,0,0,0.08); transition: all 0.3s ease;">
+                <div style="width: 40px; height: 40px; background: linear-gradient(135deg, var(--primary-blue), #3B82F6); border-radius: 50%; display: flex; align-items: center; justify-content: center; animation: pulse 3s ease-in-out infinite 0.5s;">
+                    <i class="fas fa-brain" style="color: white; font-size: 1rem;"></i>
+                </div>
+                <span style="font-weight: 600; color: var(--dark-gray); font-size: 0.95rem;">Real-Time Intelligence</span>
+            </div>
+
+            <div class="feature-tag stagger-item" style="display: flex; align-items: center; gap: 0.75rem; background: white; padding: 1rem 1.5rem; border-radius: 50px; box-shadow: 0 8px 25px rgba(0,0,0,0.08); transition: all 0.3s ease;">
+                <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #10b981, #059669); border-radius: 50%; display: flex; align-items: center; justify-content: center; animation: pulse 3s ease-in-out infinite 1s;">
+                    <i class="fas fa-cog" style="color: white; font-size: 1rem;"></i>
+                </div>
+                <span style="font-weight: 600; color: var(--dark-gray); font-size: 0.95rem;">Autonomous Task Completion</span>
+            </div>
+
+            <div class="feature-tag stagger-item" style="display: flex; align-items: center; gap: 0.75rem; background: white; padding: 1rem 1.5rem; border-radius: 50px; box-shadow: 0 8px 25px rgba(0,0,0,0.08); transition: all 0.3s ease;">
+                <div style="width: 40px; height: 40px; background: linear-gradient(135deg, var(--accent-orange), #ea580c); border-radius: 50%; display: flex; align-items: center; justify-content: center; animation: pulse 3s ease-in-out infinite 1.5s;">
+                    <i class="fas fa-chart-bar" style="color: white; font-size: 1rem;"></i>
+                </div>
+                <span style="font-weight: 600; color: var(--dark-gray); font-size: 0.95rem;">Data-Driven Decisions</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Platform Features Section -->
+    <section class="features fade-in" id="features">
+        <div class="container">
+            <h2>Complete Customer Success Platform</h2>
+            <p class="features-subtitle">Success4 delivers everything your team needs - from dashboards and task automation to goal setting, account management, and customer communication.</p>
+
+            <!-- Core Features Grid -->
+            <div class="features-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 4rem;">
+                <div class="feature-card card-3d stagger-item">
+                    <div class="feature-icon glow-on-hover">
+                        <i class="fas fa-tachometer-alt"></i>
+                    </div>
+                    <h3>Custom Dashboards</h3>
+                    <p>Personalized KPI dashboards with flexible visualizations, smart filters, and widget management for actionable customer insights.</p>
+                    <div style="margin-top: 1rem; font-weight: 600; color: var(--accent-orange);">
+                        <i class="fas fa-chart-bar"></i> Multi-format reporting
+                    </div>
+                </div>
+
+                <div class="feature-card card-3d stagger-item">
+                    <div class="feature-icon glow-on-hover">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <h3>Smart Playbooks</h3>
+                    <p>Structured workflows and standardized guides that streamline operations and ensure consistent customer success practices.</p>
+                    <div style="margin-top: 1rem; font-weight: 600; color: var(--accent-orange);">
+                        <i class="fas fa-sync"></i> Automated task management
+                    </div>
+                </div>
+
+                <div class="feature-card card-3d stagger-item">
+                    <div class="feature-icon glow-on-hover">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h3>Success Planning</h3>
+                    <p>Clear roadmaps for setting, monitoring, and achieving customer goals while aligning outcomes with business objectives.</p>
+                    <div style="margin-top: 1rem; font-weight: 600; color: var(--accent-orange);">
+                        <i class="fas fa-target"></i> Goal-driven outcomes
+                    </div>
+                </div>
+
+                <div class="feature-card card-3d stagger-item">
+                    <div class="feature-icon glow-on-hover">
+                        <i class="fas fa-plug"></i>
+                    </div>
+                    <h3>Powerful Integrations</h3>
+                    <p>Connect with Jira, QuickBooks, HubSpot, Snowflake, and more. REST API and database connections for ultimate flexibility.</p>
+                    <div style="margin-top: 1rem; font-weight: 600; color: var(--accent-orange);">
+                        <i class="fas fa-link"></i> 20+ integrations
+                    </div>
+                </div>
+
+                <div class="feature-card card-3d stagger-item">
+                    <div class="feature-icon glow-on-hover">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Account Intelligence</h3>
+                    <p>Complete Customer 360 view with health scores, engagement history, and AI-powered upsell opportunity identification.</p>
+                    <div style="margin-top: 1rem; font-weight: 600; color: var(--accent-orange);">
+                        <i class="fas fa-brain"></i> Predictive insights
+                    </div>
+                </div>
+
+                <div class="feature-card card-3d stagger-item">
+                    <div class="feature-icon glow-on-hover">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3>Engagement Tools</h3>
+                    <p>Integrated email campaigns, NPS surveys, and communication tools with unified analytics for tracking customer sentiment.</p>
+                    <div style="margin-top: 1rem; font-weight: 600; color: var(--accent-orange);">
+                        <i class="fas fa-comments"></i> Unified communication
+                    </div>
+                </div>
+            </div>
+
+            <!-- Platform Benefits -->
+            <div style="background: linear-gradient(135deg, var(--primary-blue), #3B82F6); border-radius: 24px; padding: 3rem; color: white; text-align: center; margin-top: 4rem;">
+                <h3 style="font-size: 2rem; font-weight: 700; margin-bottom: 1.5rem;">Why Success4?</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 2rem;">
+                    <div>
+                        <div style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">40%</div>
+                        <p style="opacity: 0.9;">Churn Reduction</p>
+                    </div>
+                    <div>
+                        <div style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">3x</div>
+                        <p style="opacity: 0.9;">Faster Implementation</p>
+                    </div>
+                    <div>
+                        <div style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">85%</div>
+                        <p style="opacity: 0.9;">Team Productivity Gain</p>
+                    </div>
+                    <div>
+                        <div style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">24/7</div>
+                        <p style="opacity: 0.9;">Customer Monitoring</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials fade-in" id="testimonials">
+        <div class="container">
+            <h2>Trusted by Industry Leaders</h2>
+            <div class="testimonial-carousel">
+                <div class="testimonial-track" id="testimonial-track">
+                    <div class="testimonial">
+                        <p class="testimonial-content">"Success4 transformed our customer success operations completely. The customizable dashboards and automated playbooks helped us reduce churn by 45% while improving team efficiency by 60%. It's exactly what we needed."</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">SJ</div>
+                            <div class="author-info">
+                                <h4>Sarah Johnson</h4>
+                                <p>VP of Customer Success, TechCorp</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial">
+                        <p class="testimonial-content">"The Success Plans and account intelligence features are game-changing. We can now proactively identify upsell opportunities and track customer health in real-time. Our revenue retention increased by 35%."</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">MC</div>
+                            <div class="author-info">
+                                <h4>Mike Chen</h4>
+                                <p>Head of Customer Experience, GrowthCo</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial">
+                        <p class="testimonial-content">"Success4's integrations with our existing tools saved us months of implementation time. The platform seamlessly connects with HubSpot, Jira, and our custom databases. Perfect for our complex tech stack."</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">ED</div>
+                            <div class="author-info">
+                                <h4>Emily Davis</h4>
+                                <p>Chief Customer Officer, ScaleTech</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-dots">
+                    <span class="dot active" data-slide="0"></span>
+                    <span class="dot" data-slide="1"></span>
+                    <span class="dot" data-slide="2"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Platform Advantages Section -->
+    <section class="platform-advantages fade-in" style="padding: 80px 0; background: var(--primary-white);">
+        <div class="container">
+            <!-- Hybrid Cloud Security -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; margin-bottom: 5rem; max-width: 1200px; margin-left: auto; margin-right: auto;">
+                <div class="slide-left">
+                    <div style="display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(29, 78, 216, 0.1); padding: 0.5rem 1rem; border-radius: 20px; margin-bottom: 1.5rem;">
+                        <i class="fas fa-cloud" style="color: var(--primary-blue); font-size: 0.9rem;"></i>
+                        <span style="color: var(--primary-blue); font-weight: 600; font-size: 0.9rem;">HYBRID CLOUD</span>
+                    </div>
+                    <h3 style="font-size: 2.2rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--dark-gray);">Industry's Only Hybrid Cloud Solution</h3>
+                    <p style="color: var(--text-gray); font-size: 1.1rem; line-height: 1.6; margin-bottom: 2rem;">On premise, your cloud, or our cloud - flexibly choose where you want your data to live and how you want your solution operated.</p>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
+                        <div style="text-align: center; padding: 1.5rem; background: var(--light-gray); border-radius: 12px;">
+                            <i class="fas fa-shield-alt" style="font-size: 2rem; color: var(--primary-blue); margin-bottom: 1rem;"></i>
+                            <h4 style="font-weight: 600; margin-bottom: 0.5rem;">Customer Data Security</h4>
+                        </div>
+                        <div style="text-align: center; padding: 1.5rem; background: var(--light-gray); border-radius: 12px;">
+                            <i class="fas fa-cloud" style="font-size: 2rem; color: var(--primary-blue); margin-bottom: 1rem;"></i>
+                            <h4 style="font-weight: 600; margin-bottom: 0.5rem;">Hybrid Cloud</h4>
+                        </div>
+                        <div style="text-align: center; padding: 1.5rem; background: var(--light-gray); border-radius: 12px;">
+                            <i class="fas fa-lock" style="font-size: 2rem; color: var(--primary-blue); margin-bottom: 1rem;"></i>
+                            <h4 style="font-weight: 600; margin-bottom: 0.5rem;">Firewall Protected</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slide-right" style="text-align: center;">
+                    <div style="background: linear-gradient(135deg, var(--light-gray), #ffffff); padding: 3rem; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.08);">
+                        <h4 style="font-size: 1.2rem; font-weight: 600; margin-bottom: 2rem; color: var(--dark-gray);">Security Certification & Compliance</h4>
+                        <div style="display: flex; justify-content: space-around; align-items: center; gap: 2rem;">
+                            <div style="text-align: center;">
+                                <div style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--primary-blue), #3B82F6); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                                    <i class="fas fa-certificate" style="color: white; font-size: 1.8rem;"></i>
+                                </div>
+                                <p style="font-weight: 600; font-size: 0.9rem;">SOC2 TYPE II<br>CERTIFIED</p>
+                            </div>
+                            <div style="text-align: center;">
+                                <div style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--accent-orange), #ea580c); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                                    <i class="fas fa-check-circle" style="color: white; font-size: 1.8rem;"></i>
+                                </div>
+                                <p style="font-weight: 600; font-size: 0.9rem;">VAPT<br>COMPLIANT</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Time to Value -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; margin-bottom: 5rem; max-width: 1200px; margin-left: auto; margin-right: auto;">
+                <div class="slide-right" style="order: 2;">
+                    <div style="display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(16, 185, 129, 0.1); padding: 0.5rem 1rem; border-radius: 20px; margin-bottom: 1.5rem;">
+                        <i class="fas fa-clock" style="color: #10B981; font-size: 0.9rem;"></i>
+                        <span style="color: #10B981; font-weight: 600; font-size: 0.9rem;">RAPID DEPLOYMENT</span>
+                    </div>
+                    <h3 style="font-size: 2.2rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--dark-gray);">Fastest Time to Value</h3>
+                    <p style="color: var(--text-gray); font-size: 1.1rem; line-height: 1.6; margin-bottom: 2rem;">Quickly connect to your customer data and onboard your team. Easily customize the experience for your business. Leverage our out of the box best practices and templates. <strong>Be up and running in less than a week.</strong></p>
+
+                    <div style="display: flex; gap: 1.5rem; flex-wrap: wrap;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem; background: var(--light-gray); padding: 0.75rem 1.25rem; border-radius: 50px;">
+                            <i class="fas fa-plug" style="color: var(--primary-blue);"></i>
+                            <span style="font-weight: 600; color: var(--dark-gray); font-size: 0.9rem;">Data Integrations</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem; background: var(--light-gray); padding: 0.75rem 1.25rem; border-radius: 50px;">
+                            <i class="fas fa-mouse-pointer" style="color: var(--primary-blue);"></i>
+                            <span style="font-weight: 600; color: var(--dark-gray); font-size: 0.9rem;">Drag & Drop UI Builder</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem; background: var(--light-gray); padding: 0.75rem 1.25rem; border-radius: 50px;">
+                            <i class="fas fa-file-alt" style="color: var(--primary-blue);"></i>
+                            <span style="font-weight: 600; color: var(--dark-gray); font-size: 0.9rem;">Playbook Templates</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slide-left" style="order: 1; text-align: center;">
+                    <div style="background: linear-gradient(135deg, #10B981, #059669); padding: 3rem; border-radius: 20px; color: white; position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: -20px; right: -20px; width: 100px; height: 100px; background: rgba(255,255,255,0.1); border-radius: 50%; animation: float 6s ease-in-out infinite;"></div>
+                        <div style="position: absolute; bottom: -30px; left: -30px; width: 80px; height: 80px; background: rgba(255,255,255,0.1); border-radius: 50%; animation: float 8s ease-in-out infinite reverse;"></div>
+                        <h4 style="font-size: 3rem; font-weight: 700; margin-bottom: 1rem;">< 1 Week</h4>
+                        <p style="opacity: 0.9; font-size: 1.1rem;">Implementation Time</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scale Section -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; max-width: 1200px; margin-left: auto; margin-right: auto;">
+                <div class="slide-left">
+                    <div style="display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(249, 115, 22, 0.1); padding: 0.5rem 1rem; border-radius: 20px; margin-bottom: 1.5rem;">
+                        <i class="fas fa-expand-arrows-alt" style="color: var(--accent-orange); font-size: 0.9rem;"></i>
+                        <span style="color: var(--accent-orange); font-weight: 600; font-size: 0.9rem;">SCALABILITY</span>
+                    </div>
+                    <h3 style="font-size: 2.2rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--dark-gray);">Scale to Reach Every Customer</h3>
+                    <p style="color: var(--text-gray); font-size: 1.1rem; line-height: 1.6; margin-bottom: 2rem;">Easily automate tech touch customer success through external process automation, triggers, and workflows. Leverage meaningful insights to focus your team's efforts on the highest value activities with your highest value customers.</p>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div style="display: flex; align-items: center; gap: 0.75rem; padding: 1rem; background: var(--light-gray); border-radius: 12px;">
+                            <i class="fas fa-bullseye" style="color: var(--primary-blue); font-size: 1.2rem;"></i>
+                            <span style="font-weight: 600; color: var(--dark-gray);">Success Plan</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.75rem; padding: 1rem; background: var(--light-gray); border-radius: 12px;">
+                            <i class="fas fa-tasks" style="color: var(--primary-blue); font-size: 1.2rem;"></i>
+                            <span style="font-weight: 600; color: var(--dark-gray);">Playbook</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.75rem; padding: 1rem; background: var(--light-gray); border-radius: 12px;">
+                            <i class="fas fa-bolt" style="color: var(--primary-blue); font-size: 1.2rem;"></i>
+                            <span style="font-weight: 600; color: var(--dark-gray);">Triggers</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.75rem; padding: 1rem; background: var(--light-gray); border-radius: 12px;">
+                            <i class="fas fa-cogs" style="color: var(--primary-blue); font-size: 1.2rem;"></i>
+                            <span style="font-weight: 600; color: var(--dark-gray);">Automation</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slide-right" style="text-align: center;">
+                    <div style="background: linear-gradient(135deg, var(--primary-blue), #3B82F6); padding: 3rem; border-radius: 20px; color: white; position: relative;">
+                        <div style="position: absolute; top: 10px; right: 15px; width: 60px; height: 60px; border: 2px solid rgba(255,255,255,0.2); border-radius: 50%; animation: rotate 10s linear infinite;"></div>
+                        <h4 style="font-size: 1.5rem; font-weight: 600; margin-bottom: 2rem;">Automated Customer Success</h4>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                            <div>
+                                <div style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">85%</div>
+                                <p style="opacity: 0.9; font-size: 0.9rem;">Process Automation</p>
+                            </div>
+                            <div>
+                                <div style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">24/7</div>
+                                <p style="opacity: 0.9; font-size: 0.9rem;">Customer Monitoring</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ROI Calculator Section -->
+    <section class="roi-section fade-in" style="padding: 80px 0; background: var(--light-gray);">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 4rem;">
+                <h2>Calculate Your Success ROI</h2>
+                <p style="font-size: 1.2rem; color: var(--text-gray);">See how much Success4 can save your business</p>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; max-width: 1000px; margin: 0 auto;">
+                <div class="slide-left">
+                    <h3 style="margin-bottom: 2rem; font-size: 1.5rem;">Quick ROI Calculator</h3>
+                    <div style="background: white; padding: 2rem; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                        <div style="margin-bottom: 1.5rem;">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Monthly Customers</label>
+                            <input type="range" id="customers" min="100" max="10000" value="1000" style="width: 100%; margin-bottom: 0.5rem;">
+                            <span id="customersValue" style="color: var(--primary-blue); font-weight: 600;">1000</span>
+                        </div>
+                        <div style="margin-bottom: 1.5rem;">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Current Churn Rate (%)</label>
+                            <input type="range" id="churn" min="1" max="20" value="8" style="width: 100%; margin-bottom: 0.5rem;">
+                            <span id="churnValue" style="color: var(--primary-blue); font-weight: 600;">8%</span>
+                        </div>
+                        <div style="margin-bottom: 1.5rem;">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Average Customer Value ($)</label>
+                            <input type="range" id="value" min="50" max="1000" value="200" style="width: 100%; margin-bottom: 0.5rem;">
+                            <span id="valueValue" style="color: var(--primary-blue); font-weight: 600;">$200</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="slide-right">
+                    <div style="background: linear-gradient(135deg, var(--primary-blue), #3B82F6); color: white; padding: 2rem; border-radius: 16px; text-align: center;">
+                        <h3 style="margin-bottom: 2rem;">Your Potential Savings</h3>
+                        <div style="font-size: 3rem; font-weight: 700; margin-bottom: 1rem;">
+                            $<span id="savings" class="counter" data-target="96000">96,000</span>
+                        </div>
+                        <p style="opacity: 0.9; margin-bottom: 2rem;">Annual savings with 40% churn reduction</p>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem;">
+                            <div>
+                                <div style="font-size: 1.5rem; font-weight: 600;" id="savedCustomers">320</div>
+                                <div style="opacity: 0.8; font-size: 0.9rem;">Customers Retained</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 1.5rem; font-weight: 600;">12x</div>
+                                <div style="opacity: 0.8; font-size: 0.9rem;">ROI in Year 1</div>
+                            </div>
+                        </div>
+                        <a href="#" class="secondary-cta" style="background: white; color: var(--primary-blue); border: none;">
+                            <i class="fas fa-calculator"></i>
+                            Get Detailed Analysis
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section fade-in">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Transform Your Customer Success?</h2>
+                <p>Join 500+ companies using Success4 to reduce churn, accelerate growth, and create exceptional customer experiences with our complete platform.</p>
+                <div class="cta-buttons">
+                    <a href="#" class="hero-cta glow-on-hover">
+                        <i class="fas fa-rocket"></i>
+                        Start Free Trial
+                    </a>
+                    <a href="#" class="secondary-cta">
+                        <i class="fas fa-calendar"></i>
+                        Book Demo Call
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Success4</h3>
+                    <p>Complete customer success platform with customizable tools, streamlined processes, and powerful integrations for sustainable growth.</p>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Product</h3>
+                    <ul>
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Integrations</a></li>
+                        <li><a href="#">API</a></li>
+                        <li><a href="#">Security</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Press</a></li>
+                        <li><a href="#">Partners</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Status</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Success4. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Particle System
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            if (!particlesContainer) return;
+
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Animated Counter
+        function animateCounter(element) {
+            const target = parseInt(element.dataset.target);
+            const duration = 2000;
+            const step = target / (duration / 16);
+            let current = 0;
+
+            const timer = setInterval(() => {
+                current += step;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                element.textContent = Math.floor(current).toLocaleString();
+            }, 16);
+        }
+
+        // ROI Calculator
+        function updateROI() {
+            const customers = document.getElementById('customers').value;
+            const churn = document.getElementById('churn').value;
+            const value = document.getElementById('value').value;
+
+            // Update display values
+            document.getElementById('customersValue').textContent = customers;
+            document.getElementById('churnValue').textContent = churn + '%';
+            document.getElementById('valueValue').textContent = '$' + value;
+
+            // Calculate savings (40% churn reduction)
+            const currentLoss = customers * (churn / 100) * value * 12;
+            const newLoss = customers * (churn / 100 * 0.6) * value * 12;
+            const savings = Math.floor(currentLoss - newLoss);
+            const savedCustomers = Math.floor(customers * (churn / 100) * 0.4 * 12);
+
+            document.getElementById('savings').textContent = savings.toLocaleString();
+            document.getElementById('savedCustomers').textContent = savedCustomers;
+        }
+
+        // Header scroll effect with parallax
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            const scrollY = window.scrollY;
+
+            if (scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+
+            // Parallax effect for shapes
+            const shapes = document.querySelectorAll('.parallax');
+            shapes.forEach((shape, index) => {
+                const speed = 0.5 + (index * 0.1);
+                shape.style.transform = `translateY(${scrollY * speed}px)`;
+            });
+        });
+
+        // Enhanced viewport detection
+        function isElementInViewport(el, threshold = 0.1) {
+            const rect = el.getBoundingClientRect();
+            const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+            const windowWidth = window.innerWidth || document.documentElement.clientWidth;
+
+            return (
+                rect.top <= windowHeight * (1 - threshold) &&
+                rect.bottom >= windowHeight * threshold &&
+                rect.left >= 0 &&
+                rect.right <= windowWidth
+            );
+        }
+
+        // Advanced scroll animations
+        function handleScrollAnimations() {
+            // Fade in animations
+            const fadeElements = document.querySelectorAll('.fade-in, .slide-left, .slide-right, .scale-in');
+            fadeElements.forEach(element => {
+                if (isElementInViewport(element, 0.2)) {
+                    element.classList.add('visible');
+                }
+            });
+
+            // Staggered animations
+            const staggerItems = document.querySelectorAll('.stagger-item');
+            staggerItems.forEach((item, index) => {
+                if (isElementInViewport(item, 0.3)) {
+                    setTimeout(() => {
+                        item.classList.add('visible');
+                        item.style.opacity = '1';
+                        item.style.transform = 'translateY(0)';
+                    }, index * 150);
+                }
+            });
+
+            // Counter animations
+            const counters = document.querySelectorAll('.counter:not(.animated)');
+            counters.forEach(counter => {
+                if (isElementInViewport(counter, 0.5)) {
+                    counter.classList.add('animated');
+                    animateCounter(counter);
+                }
+            });
+
+            // Feature cards animation
+            const featureCards = document.querySelectorAll('.feature-card:not(.animated)');
+            featureCards.forEach((card, index) => {
+                if (isElementInViewport(card, 0.3)) {
+                    card.classList.add('animated');
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, index * 200);
+                }
+            });
+        }
+
+        // Testimonial carousel with enhanced animations
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.testimonial');
+        const dots = document.querySelectorAll('.dot');
+        const track = document.getElementById('testimonial-track');
+
+        function showSlide(index) {
+            currentSlide = index;
+            track.style.transform = `translateX(-${index * 100}%)`;
+
+            dots.forEach(dot => dot.classList.remove('active'));
+            if (dots[index]) dots[index].classList.add('active');
+
+            // Add slide animation class
+            slides.forEach((slide, i) => {
+                slide.style.opacity = i === index ? '1' : '0.7';
+                slide.style.transform = i === index ? 'scale(1)' : 'scale(0.95)';
+            });
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }
+
+        // Mouse trail effect
+        let mouseTrail = [];
+        document.addEventListener('mousemove', function(e) {
+            mouseTrail.push({x: e.clientX, y: e.clientY, time: Date.now()});
+
+            // Keep only recent positions
+            mouseTrail = mouseTrail.filter(point => Date.now() - point.time < 1000);
+        });
+
+        // Simple fade-in animation for hero elements
+        function initHeroAnimations() {
+            const heroElements = document.querySelectorAll('.hero .fade-in');
+            heroElements.forEach((element, index) => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(30px)';
+
+                setTimeout(() => {
+                    element.style.transition = 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }, 200 + (index * 200));
+            });
+        }
+
+        // Globe Interactive Animation
+        function initInteractiveBackground() {
+            const hero = document.querySelector('.hero');
+            const globeContainer = document.querySelector('.globe-container');
+            const globe3D = document.querySelector('.globe-3d');
+            const dataPoints = document.querySelectorAll('.data-points > div');
+
+            if (!hero || !globeContainer) return;
+
+            hero.addEventListener('mousemove', function(e) {
+                const rect = hero.getBoundingClientRect();
+                const x = (e.clientX - rect.left) / rect.width;
+                const y = (e.clientY - rect.top) / rect.height;
+
+                // Calculate mouse position relative to center
+                const centerX = x - 0.5;
+                const centerY = y - 0.5;
+
+                // Subtle globe scale effect on mouse movement
+                if (globe3D) {
+                    const scale = 1 + Math.abs(centerX + centerY) * 0.05;
+                    globe3D.style.transition = 'transform 0.3s ease-out';
+                    globe3D.style.transform = `scale(${scale})`;
+                }
+
+                // Move globe container slightly based on mouse
+                const moveX = centerX * 10;
+                const moveY = centerY * 8;
+                globeContainer.style.transform = `translate(-50%, -50%) translateX(${moveX}px) translateY(${moveY}px)`;
+
+                // Enhance data points movement
+                dataPoints.forEach((point, index) => {
+                    const pointMoveX = centerX * (10 + index * 3);
+                    const pointMoveY = centerY * (8 + index * 2);
+                    const pointScale = 1 + Math.abs(centerX + centerY) * 0.3;
+
+                    point.style.transform = `translate(${pointMoveX}px, ${pointMoveY}px) scale(${pointScale})`;
+                });
+
+                // Add subtle perspective shift to hero section
+                hero.style.transform = `perspective(1200px) rotateX(${centerY * 1}deg) rotateY(${centerX * 0.5}deg)`;
+            });
+
+            // Reset on mouse leave with smooth transition
+            hero.addEventListener('mouseleave', function() {
+                const resetDuration = '0.8s';
+
+                // Reset globe
+                if (globe3D) {
+                    globe3D.style.transition = `transform ${resetDuration} ease-out`;
+                    globe3D.style.transform = '';
+                }
+
+                // Reset globe container
+                globeContainer.style.transition = `transform ${resetDuration} ease-out`;
+                globeContainer.style.transform = 'translate(-50%, -50%)';
+
+                // Reset data points
+                dataPoints.forEach(point => {
+                    point.style.transition = `transform ${resetDuration} ease-out`;
+                    point.style.transform = '';
+                });
+
+                // Reset hero perspective
+                hero.style.transition = `transform ${resetDuration} ease-out`;
+                hero.style.transform = '';
+
+                // Remove transitions after reset
+                setTimeout(() => {
+                    if (globe3D) globe3D.style.transition = '';
+                    globeContainer.style.transition = '';
+                    dataPoints.forEach(point => point.style.transition = '');
+                    hero.style.transition = '';
+                }, 800);
+            });
+        }
+
+        // Advanced particle system for hero
+        function createHeroParticles() {
+            const particleContainer = document.querySelector('.hero-particles');
+            if (!particleContainer) return;
+
+            // Create additional dynamic particles
+            for (let i = 0; i < 15; i++) {
+                const particle = document.createElement('div');
+                particle.style.cssText = `
+                    position: absolute;
+                    width: ${Math.random() * 3 + 1}px;
+                    height: ${Math.random() * 3 + 1}px;
+                    background: rgba(${Math.random() > 0.5 ? '29, 78, 216' : '249, 115, 22'}, ${Math.random() * 0.5 + 0.2});
+                    border-radius: 50%;
+                    top: ${Math.random() * 100}%;
+                    left: ${Math.random() * 100}%;
+                    animation: particleFloat ${Math.random() * 8 + 6}s ease-in-out infinite ${Math.random() * 5}s;
+                `;
+                particleContainer.appendChild(particle);
+            }
+        }
+
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+
+            // ROI Calculator event listeners
+            const roiInputs = ['customers', 'churn', 'value'];
+            roiInputs.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.addEventListener('input', updateROI);
+                }
+            });
+
+            // Initial ROI calculation
+            updateROI();
+
+            // Auto-advance carousel
+            if (slides.length > 0) {
+                setInterval(nextSlide, 5000);
+                showSlide(0); // Initialize first slide
+            }
+
+            // Dot navigation
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => showSlide(index));
+            });
+
+            // Enhanced button hover effects
+            const buttons = document.querySelectorAll('.hero-cta, .secondary-cta, .nav-cta');
+            buttons.forEach(button => {
+                button.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-3px) scale(1.05)';
+                });
+
+                button.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+
+            // Feature cards hover sound effect (visual only)
+            const featureCards = document.querySelectorAll('.feature-card');
+            featureCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.boxShadow = '0 25px 50px rgba(29, 78, 216, 0.2)';
+                });
+
+                card.addEventListener('mouseleave', function() {
+                    this.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.05)';
+                });
+            });
+
+            // Start hero animations
+            initHeroAnimations();
+            initInteractiveBackground();
+            createHeroParticles();
+        });
+
+        // Scroll event listeners
+        window.addEventListener('scroll', handleScrollAnimations);
+        window.addEventListener('load', handleScrollAnimations);
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-btn')?.addEventListener('click', function() {
+            const navLinks = document.querySelector('.nav-links');
+            if (navLinks) {
+                navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+            }
+        });
+
+        // Add some performance optimization
+        let ticking = false;
+        function requestTick() {
+            if (!ticking) {
+                requestAnimationFrame(handleScrollAnimations);
+                ticking = true;
+            }
+        }
+
+        window.addEventListener('scroll', function() {
+            requestTick();
+            ticking = false;
+        });
+    </script>
+</body>
+</html>
