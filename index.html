@@ -3,9 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SuccessFlow - Customer Success Platform</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>Customer Success Software | Easy, Secure, Insightful | Success4</title>
+    <meta name="description" content="Success4 is an AI-driven Customer Success Platform that helps SaaS and enterprise teams reduce churn, improve customer engagement, automate playbooks, and accelerate revenue retention.">
+    <meta name="keywords" content="customer success software, customer success platform, churn reduction tool, customer retention software, enterprise CSM platform, NPS tracking, onboarding workflow software, account health scoring, CRM customer success integration, customer lifecycle management">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+      <link rel="icon" type="image/x-icon" href="S4logo.svg">
+
+    
     <style>
         * {
             margin: 0;
@@ -23,17 +28,51 @@
             --border-gray: #E5E7EB;
         }
 
+        html {
+            overflow-x: hidden;
+            width: 100%;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
             line-height: 1.6;
             color: var(--dark-gray);
             overflow-x: hidden;
+            width: 100%;
+            max-width: 100vw;
+            position: relative;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Touch optimization */
+        a, button {
+            -webkit-tap-highlight-color: rgba(29, 78, 216, 0.2);
+            touch-action: manipulation;
+        }
+
+        /* Improve button touch targets on mobile */
+        @media (max-width: 768px) {
+            button, a {
+                min-height: 44px;
+                min-width: 44px;
+            }
         }
 
         .container {
             max-width: 1200px;
+            width: 100%;
             margin: 0 auto;
             padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        /* Prevent all sections from overflowing */
+        section {
+            width: 100%;
+            max-width: 100vw;
+            overflow-x: hidden;
+            box-sizing: border-box;
         }
 
         /* Header Styles */
@@ -107,6 +146,50 @@
             font-size: 1.5rem;
             color: var(--dark-gray);
             cursor: pointer;
+            z-index: 1001;
+        }
+
+        /* Mobile Menu Overlay */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: var(--primary-white);
+            z-index: 999;
+            padding: 80px 20px 20px;
+            overflow-y: auto;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+
+        .mobile-menu .nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .mobile-menu .nav-links li {
+            border-bottom: 1px solid var(--border-gray);
+        }
+
+        .mobile-menu .nav-links a {
+            display: block;
+            padding: 1.25rem 0;
+            font-size: 1.1rem;
+            color: var(--dark-gray);
+        }
+
+        .mobile-menu .nav-cta {
+            margin-top: 1.5rem;
+            display: block;
+            text-align: center;
         }
 
         /* Hero Section */
@@ -115,6 +198,8 @@
             padding: 120px 0 80px;
             position: relative;
             overflow: hidden;
+            width: 100%;
+            max-width: 100vw;
         }
 
         .hero::before {
@@ -423,11 +508,30 @@
         .footer-section ul li a {
             color: var(--text-gray);
             text-decoration: none;
-            transition: color 0.3s ease;
+            transition: all 0.3s ease;
+            display: inline-block;
+            position: relative;
+            padding-left: 0;
+        }
+
+        .footer-section ul li a::before {
+            content: '→';
+            position: absolute;
+            left: -20px;
+            opacity: 0;
+            transition: all 0.3s ease;
+            color: var(--accent-orange);
         }
 
         .footer-section ul li a:hover {
             color: var(--primary-white);
+            padding-left: 20px;
+            transform: translateX(5px);
+        }
+
+        .footer-section ul li a:hover::before {
+            opacity: 1;
+            left: 0;
         }
 
         .social-icons {
@@ -738,16 +842,15 @@
             transform: scale(1.5);
         }
 
-        /* Remove tilt animation for static globe */
-        .globe-container {
-            /* Static positioning - no animation */
-        }
+        /* Remove tilt animation for static globe - using inline styles for positioning */
 
         /* Responsive Globe */
         @media (max-width: 968px) {
             .globe-container {
                 width: 400px !important;
                 height: 400px !important;
+                left: 50% !important;
+                transform: translateX(-50%) translateY(-50%) !important;
             }
 
             .globe-container svg {
@@ -760,6 +863,8 @@
             .globe-container {
                 width: 300px !important;
                 height: 300px !important;
+                left: 50% !important;
+                transform: translateX(-50%) translateY(-50%) !important;
             }
 
             .globe-container svg {
@@ -773,6 +878,8 @@
                 width: 250px !important;
                 height: 250px !important;
                 top: 60% !important;
+                left: 50% !important;
+                transform: translateX(-50%) translateY(-50%) !important;
             }
 
             .globe-container svg {
@@ -942,7 +1049,7 @@
         .counter {
             font-size: 3rem;
             font-weight: 700;
-            color: var(--primary-blue);
+            color: var(--primary-white);
             transition: all 0.3s ease;
         }
 
@@ -1016,8 +1123,12 @@
             .floating-process-card {
                 position: static !important;
                 width: 100% !important;
+                max-width: 100% !important;
                 margin-bottom: 2rem !important;
                 transform: none !important;
+                left: auto !important;
+                right: auto !important;
+                top: auto !important;
             }
 
             .how-it-works div[style*="height: 600px"] {
@@ -1026,6 +1137,11 @@
 
             .feature-tag {
                 margin-bottom: 1rem;
+            }
+
+            /* Ensure all absolutely positioned elements don't overflow */
+            section > div {
+                max-width: 100% !important;
             }
 
             /* Hero mobile optimizations */
@@ -1052,27 +1168,77 @@
                 display: block;
             }
 
+            .mobile-menu {
+                display: block;
+            }
+
+            /* Hide desktop Book Demo button on mobile, show only in menu */
+            .header .nav-cta {
+                display: none;
+            }
+
             .hero h1 {
                 font-size: 2.5rem;
+                line-height: 1.2;
             }
 
             .hero-subtitle {
                 font-size: 1.1rem;
+                line-height: 1.5;
+            }
+
+            .hero-buttons {
+                flex-direction: column !important;
+            }
+
+            .hero-buttons a,
+            .hero-buttons button {
+                width: 100%;
+                max-width: 320px;
+                padding: 1rem 2rem !important;
+            }
+
+            .hero-cta,
+            .secondary-cta {
+                padding: 0.875rem 1.75rem;
+                font-size: 1rem;
+            }
+
+            .secondary-cta {
+                margin-left: 0;
+                margin-top: 0;
+                display: block;
+                width: 100%;
+                max-width: 300px;
+                text-align: center;
+            }
+
+            .hero-cta {
+                display: block;
+                width: 100%;
+                max-width: 300px;
+                text-align: center;
             }
 
             .features h2,
             .testimonials h2,
             .cta-content h2 {
                 font-size: 2rem;
+                line-height: 1.2;
+            }
+
+            .features-subtitle,
+            .cta-content p {
+                font-size: 1.1rem;
             }
 
             .feature-card {
                 padding: 2rem;
             }
 
-            .secondary-cta {
-                margin-left: 0;
-                margin-top: 1rem;
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
             }
 
             .cta-buttons {
@@ -1080,14 +1246,80 @@
                 align-items: center;
             }
 
+            .cta-buttons .hero-cta,
+            .cta-buttons .secondary-cta {
+                width: 100%;
+                max-width: 300px;
+            }
+
             .testimonial {
                 padding: 0 1rem;
+            }
+
+            .testimonial-content {
+                font-size: 1.1rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                text-align: center;
+            }
+
+            .social-icons {
+                justify-content: center;
+            }
+
+            /* ROI Calculator Mobile */
+            .roi-section div[style*="grid-template-columns: 1fr 1fr"] {
+                grid-template-columns: 1fr !important;
+                gap: 2rem !important;
+            }
+
+            /* Platform Advantages - Hybrid Cloud & Time to Value */
+            .platform-advantages div[style*="grid-template-columns: 1fr 1fr"] {
+                grid-template-columns: 1fr !important;
+                gap: 2rem !important;
+            }
+
+            /* Reverse order for better mobile UX */
+            .platform-advantages div[style*="order: 2"] {
+                order: 1 !important;
+            }
+
+            /* Fix nested grids in these sections */
+            .platform-advantages div[style*="grid-template-columns: repeat"] {
+                grid-template-columns: 1fr !important;
+            }
+
+            /* Reduce margins on mobile for platform advantages */
+            .platform-advantages > .container > div {
+                margin-bottom: 3rem !important;
+            }
+
+            /* Make text more mobile-friendly */
+            .platform-advantages h3 {
+                font-size: 1.75rem !important;
+            }
+
+            .platform-advantages p {
+                font-size: 1rem !important;
+            }
+
+            /* Book Demo button in mobile menu */
+            .mobile-menu .nav-cta {
+                padding: 0.75rem 1.25rem !important;
+                font-size: 0.95rem !important;
+                max-width: 200px;
+                margin-left: auto;
+                margin-right: auto;
             }
         }
 
         @media (max-width: 480px) {
             .container {
                 padding: 0 15px;
+                max-width: 100%;
             }
 
             .hero {
@@ -1095,7 +1327,19 @@
             }
 
             .hero h1 {
-                font-size: 2rem;
+                font-size: 1.75rem;
+                line-height: 1.2;
+                padding: 0 10px;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .hero-cta,
+            .secondary-cta {
+                padding: 0.75rem 1.5rem;
+                font-size: 0.95rem;
             }
 
             .features,
@@ -1103,7 +1347,274 @@
             .cta-section {
                 padding: 60px 0;
             }
+
+            .features h2,
+            .testimonials h2,
+            .cta-content h2 {
+                font-size: 1.75rem;
+            }
+
+            .feature-card {
+                padding: 1.5rem;
+            }
+
+            .feature-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+
+            .feature-card h3 {
+                font-size: 1.25rem;
+            }
+
+            .testimonial-content {
+                font-size: 1rem;
+            }
+
+            .author-avatar {
+                width: 50px;
+                height: 50px;
+                font-size: 1rem;
+            }
+
+            /* Extra small screens - prevent any overflow */
+            * {
+                max-width: 100%;
+            }
+
+            img {
+                max-width: 100%;
+                height: auto;
+            }
+
+            /* ROI Calculator on small screens */
+            .roi-section h3 {
+                font-size: 1.25rem !important;
+            }
+
+            .roi-section div[style*="font-size: 3rem"] {
+                font-size: 2rem !important;
+            }
+
+            /* Platform Advantages on small screens */
+            .platform-advantages h3 {
+                font-size: 1.5rem !important;
+            }
+
+            .platform-advantages p {
+                font-size: 1rem !important;
+            }
         }
+
+        /* Tablet & Mobile Animation Optimizations */
+        @media (max-width: 768px) {
+            /* Reduce animation intensity on tablets - keep subtle fade */
+            .fade-in {
+                opacity: 0.3;
+                transform: translateY(10px);
+            }
+
+            .fade-in.visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            /* Minimize slide animations on tablets */
+            .slide-left,
+            .slide-right {
+                opacity: 0.3;
+                transform: translateX(0) !important;
+            }
+
+            .slide-left.visible,
+            .slide-right.visible {
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 480px) {
+            /* Mobile - disable all animations for instant visibility */
+            .fade-in,
+            .slide-left,
+            .slide-right,
+            .scale-in {
+                opacity: 1 !important;
+                transform: translateY(0) translateX(0) scale(1) !important;
+            }
+
+            /* Book Demo button - extra small screens */
+            .mobile-menu .nav-cta {
+                padding: 0.65rem 1rem !important;
+                font-size: 0.9rem !important;
+                max-width: 180px;
+            }
+        }
+
+        /* Book Demo Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: var(--primary-white);
+            margin: 5% auto;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            animation: modalSlideIn 0.3s ease-out;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .close-modal {
+            color: var(--text-gray);
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 32px;
+            font-weight: 300;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close-modal:hover,
+        .close-modal:focus {
+            color: var(--dark-gray);
+        }
+
+        .modal-content h2 {
+            color: var(--dark-gray);
+            margin-bottom: 1rem;
+            font-size: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--dark-gray);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border-gray);
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px 24px;
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .submit-btn:hover {
+            background: #1e40af;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(29, 78, 216, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .modal-content {
+                margin: 10% auto;
+                padding: 30px 20px;
+                width: 95%;
+            }
+
+            .modal-content h2 {
+                font-size: 1.5rem;
+            }
+        }
+
+         @media (min-width: 1024px) {
+            .metric-center {
+             grid-column: 1 / -1;
+             text-align: center;
+             justify-self: center;
+            }
+         }
+
+        /* Pricing Section Styles */
+        .pricing-card {
+            transition: all 0.3s ease;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .pricing-card.scale-in:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        @media (max-width: 768px) {
+            .pricing-card.scale-in {
+                transform: scale(1) !important;
+            }
+
+            .pricing-card.scale-in:hover {
+                transform: translateY(-8px) scale(1.02) !important;
+            }
+
+            .pricing-section {
+                padding: 60px 0 !important;
+            }
+
+            .pricing-section h2 {
+                font-size: 2rem !important;
+            }
+
+            .pricing-section > .container > div[style*="grid-template-columns"] {
+                grid-template-columns: 1fr !important;
+                gap: 2rem !important;
+            }
+        }
+    
     </style>
 </head>
 <body>
@@ -1112,13 +1623,14 @@
         <div class="container">
             <nav class="nav">
                 <a href="#" class="logo">
-                    <img src="s4Logo.webp" alt="Success4" style="height: 40px; width: auto;">
+                    <img src="s4Logo.webp" alt="Success4 Customer Success Platform Logo" style="height: 40px; width: auto;">
                 </a>
                 <ul class="nav-links">
                     <li><a href="#features">Features</a></li>
-                    <li><a href="#testimonials">Success Stories</a></li>
+                    <li><a href="#how-it-works">How It Works</a></li>
                     <li><a href="#pricing">Pricing</a></li>
-                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#roi-calculator">ROI Calculator</a></li>
+                    <li><a href="#footer">Contact</a></li>
                 </ul>
                 <a href="#" class="nav-cta">Book Demo</a>
                 <button class="mobile-menu-btn" id="mobile-menu-btn">
@@ -1128,8 +1640,20 @@
         </div>
     </header>
 
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <ul class="nav-links">
+            <li><a href="#features">Features</a></li>
+            <li><a href="#how-it-works">How It Works</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+            <li><a href="#roi-calculator">ROI Calculator</a></li>
+            <li><a href="#footer">Contact</a></li>
+        </ul>
+        <a href="#" class="nav-cta">Book Demo</a>
+    </div>
+
     <!-- Hero Section -->
-    <section class="hero" style="background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%); color: var(--dark-gray); padding: 140px 0 100px; position: relative; overflow: hidden; perspective: 1200px;">
+    <section id="home" class="hero" style="background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%); color: var(--dark-gray); padding: 140px 0 100px; position: relative; overflow: hidden; perspective: 1200px;">
 
         <!-- 3D Globe Container -->
         <div class="globe-container" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 500px; height: 500px; pointer-events: none; z-index: 1;">
@@ -1245,7 +1769,7 @@
                 </p>
 
                 <!-- CTA Section -->
-                <div class="fade-in" style="display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem;">
+                <div class="fade-in hero-buttons" style="display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem;">
                     
                     <!-- <div style="display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(29, 78, 216, 0.05); border: 1px solid rgba(29, 78, 216, 0.1); padding: 0.75rem 1.25rem; border-radius: 50px; font-size: 0.9rem; color: var(--primary-blue); font-weight: 500;">
                         <i class="fas fa-star" style="font-size: 0.8rem;"></i>
@@ -1253,10 +1777,10 @@
                     </div> -->
 
                     <!-- Main CTA Button -->
-                    <a href="#" style="background: var(--dark-gray); color: white; padding: 1rem 2rem; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 1rem; transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 0.5rem; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);"
+                    <a href="#" class="secondary-cta" style="background: var(--dark-gray); color: white; padding: 1rem 2rem; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 1rem; transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 0.5rem; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);"
                        onmouseover="this.style.background='#000000'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 25px rgba(0, 0, 0, 0.15)'"
                        onmouseout="this.style.background='var(--dark-gray)'; this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(0, 0, 0, 0.1)'">
-                        Get Early Access
+                     REQUEST A DEMO
                     </a>
                 </div>
 
@@ -1272,7 +1796,7 @@
                     </div>
                     <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; color: var(--text-gray);">
                         <i class="fas fa-check-circle" style="color: #10B981;"></i>
-                        <span>500+ Enterprises</span>
+                        <span>Enterprise Approval</span>
                     </div>
                 </div>
 
@@ -1281,7 +1805,7 @@
     </section>
 
     <!-- How It Works Section (Inspired by Centive) -->
-    <section class="how-it-works fade-in" style="padding: 80px 0; background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); position: relative; overflow: hidden;">
+    <section id="how-it-works" class="how-it-works fade-in" style="padding: 80px 0; background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); position: relative; overflow: hidden;">
         <div class="container">
             <div style="text-align: center; margin-bottom: 4rem;">
                 <div style="display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(29, 78, 216, 0.1); padding: 0.5rem 1rem; border-radius: 20px; margin-bottom: 1rem;">
@@ -1506,7 +2030,7 @@
             <!-- Platform Benefits -->
             <div style="background: linear-gradient(135deg, var(--primary-blue), #3B82F6); border-radius: 24px; padding: 3rem; color: white; text-align: center; margin-top: 4rem;">
                 <h3 style="font-size: 2rem; font-weight: 700; margin-bottom: 1.5rem;">Why Success4?</h3>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 2rem;">
+                <div style="display: flex; justify-content: space-around; flex-wrap: wrap;">
                     <div>
                         <div style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">40%</div>
                         <p style="opacity: 0.9;">Churn Reduction</p>
@@ -1519,7 +2043,7 @@
                         <div style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">85%</div>
                         <p style="opacity: 0.9;">Team Productivity Gain</p>
                     </div>
-                    <div>
+                    <div class="metric-center">
                         <div style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">24/7</div>
                         <p style="opacity: 0.9;">Customer Monitoring</p>
                     </div>
@@ -1529,7 +2053,7 @@
     </section>
 
     <!-- Testimonials Section -->
-    <section class="testimonials fade-in" id="testimonials">
+    <!-- <section class="testimonials fade-in" id="testimonials">
         <div class="container">
             <h2>Trusted by Industry Leaders</h2>
             <div class="testimonial-carousel">
@@ -1572,7 +2096,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
 
     <!-- Platform Advantages Section -->
     <section class="platform-advantages fade-in" style="padding: 80px 0; background: var(--primary-white);">
@@ -1585,7 +2109,7 @@
                         <span style="color: var(--primary-blue); font-weight: 600; font-size: 0.9rem;">HYBRID CLOUD</span>
                     </div>
                     <h3 style="font-size: 2.2rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--dark-gray);">Industry's Only Hybrid Cloud Solution</h3>
-                    <p style="color: var(--text-gray); font-size: 1.1rem; line-height: 1.6; margin-bottom: 2rem;">On premise, your cloud, or our cloud - flexibly choose where you want your data to live and how you want your solution operated.</p>
+                    <p style="color: var(--text-gray); font-size: 1.1rem; line-height: 1.6; margin-bottom: 2rem;">On-premise, your cloud, or our cloud - flexibly choose where you want your data to live and how you want your solution operated.</p>
 
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
                         <div style="text-align: center; padding: 1.5rem; background: var(--light-gray); border-radius: 12px;">
@@ -1632,7 +2156,7 @@
                         <span style="color: #10B981; font-weight: 600; font-size: 0.9rem;">RAPID DEPLOYMENT</span>
                     </div>
                     <h3 style="font-size: 2.2rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--dark-gray);">Fastest Time to Value</h3>
-                    <p style="color: var(--text-gray); font-size: 1.1rem; line-height: 1.6; margin-bottom: 2rem;">Quickly connect to your customer data and onboard your team. Easily customize the experience for your business. Leverage our out of the box best practices and templates. <strong>Be up and running in less than a week.</strong></p>
+                    <p style="color: var(--text-gray); font-size: 1.1rem; line-height: 1.6; margin-bottom: 2rem;">Quickly connect to your customer data and onboard your team. Easily customize the experience for your business. Leverage our out-of-the-box best practices and templates. <strong>Be up and running in less than a week.</strong></p>
 
                     <div style="display: flex; gap: 1.5rem; flex-wrap: wrap;">
                         <div style="display: flex; align-items: center; gap: 0.5rem; background: var(--light-gray); padding: 0.75rem 1.25rem; border-radius: 50px;">
@@ -1700,7 +2224,7 @@
                                 <p style="opacity: 0.9; font-size: 0.9rem;">Process Automation</p>
                             </div>
                             <div>
-                                <div style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">24/7</div>
+                                <div style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">25/7</div>
                                 <p style="opacity: 0.9; font-size: 0.9rem;">Customer Monitoring</p>
                             </div>
                         </div>
@@ -1711,7 +2235,7 @@
     </section>
 
     <!-- ROI Calculator Section -->
-    <section class="roi-section fade-in" style="padding: 80px 0; background: var(--light-gray);">
+    <section id="roi-calculator" class="roi-section fade-in" style="padding: 80px 0; background: var(--light-gray);">
         <div class="container">
             <div style="text-align: center; margin-bottom: 4rem;">
                 <h2>Calculate Your Success ROI</h2>
@@ -1765,17 +2289,135 @@
         </div>
     </section>
 
+    <!-- Pricing Section -->
+    <section id="pricing" class="pricing-section fade-in" style="padding: 80px 0; background: var(--primary-white);">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 4rem;">
+                <div style="display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(29, 78, 216, 0.1); padding: 0.5rem 1rem; border-radius: 20px; margin-bottom: 1rem;">
+                    <i class="fas fa-tag" style="color: var(--primary-blue); font-size: 0.9rem;"></i>
+                    <span style="color: var(--primary-blue); font-weight: 600; font-size: 0.9rem;">PRICING</span>
+                </div>
+                <h2 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; color: var(--dark-gray);">Simple, Transparent Pricing</h2>
+                <p style="font-size: 1.2rem; color: var(--text-gray); max-width: 600px; margin: 0 auto;">Choose the plan that fits your team's needs</p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; max-width: 1000px; margin: 0 auto;">
+                <!-- Standard Plan -->
+                <div class="pricing-card slide-left" style="background: var(--primary-white); border: 2px solid var(--border-gray); border-radius: 24px; padding: 2.5rem; text-align: center; position: relative; transition: all 0.3s ease;">
+                    <div style="margin-bottom: 1.5rem;">
+                        <h3 style="font-size: 1.5rem; font-weight: 600; color: var(--dark-gray); margin-bottom: 0.5rem;">Standard</h3>
+                        <p style="color: var(--text-gray); font-size: 0.95rem;">Perfect for growing teams</p>
+                    </div>
+                    
+                    <div style="margin-bottom: 2rem;">
+                        <div style="display: flex; align-items: baseline; justify-content: center; gap: 0.25rem; margin-bottom: 0.5rem;">
+                            <span style="font-size: 3rem; font-weight: 700; color: var(--dark-gray);">$499</span>
+                            <span style="font-size: 1.2rem; color: var(--text-gray);">/month</span>
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 2rem; text-align: left;">
+                        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; padding: 0.75rem; background: var(--light-gray); border-radius: 8px;">
+                            <i class="fas fa-users" style="color: var(--primary-blue); font-size: 1.1rem;"></i>
+                            <div>
+                                <div style="font-weight: 600; color: var(--dark-gray);">5 Users</div>
+                                <div style="font-size: 0.85rem; color: var(--text-gray);">Team members included</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; padding: 0.75rem; background: var(--light-gray); border-radius: 8px;">
+                            <i class="fas fa-building" style="color: var(--primary-blue); font-size: 1.1rem;"></i>
+                            <div>
+                                <div style="font-weight: 600; color: var(--dark-gray);">500 Accounts</div>
+                                <div style="font-size: 0.85rem; color: var(--text-gray);">Customer accounts managed</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; background: var(--light-gray); border-radius: 8px;">
+                            <i class="fas fa-check-circle" style="color: #10B981; font-size: 1.1rem;"></i>
+                            <div>
+                                <div style="font-weight: 600; color: var(--dark-gray);">All Platform Features</div>
+                                <div style="font-size: 0.85rem; color: var(--text-gray);">Full access to Success4</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="#" class="nav-cta" style="display: block; text-align: center; width: 100%;">
+                        Get Started
+                    </a>
+                </div>
+
+                <!-- Enterprise Plan -->
+                <div class="pricing-card scale-in" style="background: var(--primary-white); border: 2px solid var(--border-gray); border-radius: 24px; padding: 2.5rem; text-align: center; position: relative; transition: all 0.3s ease;">
+                    <!-- Popular Badge -->
+                    <div style="position: absolute; top: -15px; left: 50%; transform: translateX(-50%); background: var(--accent-orange); color: white; padding: 0.5rem 1.25rem; border-radius: 50px; font-size: 0.85rem; font-weight: 600; box-shadow: 0 4px 15px rgba(249, 115, 22, 0.4);">
+                        <i class="fas fa-star"></i> Most Popular
+                    </div>
+
+                    <div style="margin-bottom: 1.5rem;">
+                        <h3 style="font-size: 1.5rem; font-weight: 600; color: var(--dark-gray); margin-bottom: 0.5rem;">Enterprise</h3>
+                        <p style="color: var(--text-gray); font-size: 0.95rem;">For large organizations</p>
+                    </div>
+                    
+                    <div style="margin-bottom: 2rem;">
+                        <div style="display: flex; align-items: baseline; justify-content: center; gap: 0.25rem; margin-bottom: 0.5rem;">
+                            <span style="font-size: 2.5rem; font-weight: 700; color: var(--dark-gray);">Custom</span>
+                        </div>
+                        <p style="color: var(--text-gray); font-size: 0.9rem;">Tailored to your needs</p>
+                    </div>
+
+                    <div style="margin-bottom: 2rem; text-align: left;">
+                        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; padding: 0.75rem; background: var(--light-gray); border-radius: 8px;">
+                            <i class="fas fa-users" style="color: var(--primary-blue); font-size: 1.1rem;"></i>
+                            <div>
+                                <div style="font-weight: 600; color: var(--dark-gray);">Unlimited Users</div>
+                                <div style="font-size: 0.85rem; color: var(--text-gray);">Scale your team</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; padding: 0.75rem; background: var(--light-gray); border-radius: 8px;">
+                            <i class="fas fa-building" style="color: var(--primary-blue); font-size: 1.1rem;"></i>
+                            <div>
+                                <div style="font-weight: 600; color: var(--dark-gray);">Unlimited Accounts</div>
+                                <div style="font-size: 0.85rem; color: var(--text-gray);">No account limits</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; background: var(--light-gray); border-radius: 8px;">
+                            <i class="fas fa-star" style="color: var(--primary-blue); font-size: 1.1rem;"></i>
+                            <div>
+                                <div style="font-weight: 600; color: var(--dark-gray);">Premium Support & Features</div>
+                                <div style="font-size: 0.85rem; color: var(--text-gray);">Dedicated success manager</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="#" class="nav-cta" style="display: block; text-align: center; width: 100%;">
+                        Contact Us
+                    </a>
+                </div>
+            </div>
+
+            <!-- Additional Info -->
+            <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: var(--light-gray); border-radius: 16px; max-width: 800px; margin-left: auto; margin-right: auto;">
+                <p style="color: var(--text-gray); font-size: 1rem; margin-bottom: 1rem;">
+                    <i class="fas fa-info-circle" style="color: var(--primary-blue); margin-right: 0.5rem;"></i>
+                    All plans include 24/7 customer monitoring, automated playbooks, and full platform access
+                </p>
+                <p style="color: var(--text-gray); font-size: 0.9rem;">
+                    Need help choosing? <a href="#" style="color: var(--primary-blue); font-weight: 600; text-decoration: none;">Book a demo</a> to discuss your requirements
+                </p>
+            </div>
+        </div>
+    </section>
+
     <!-- CTA Section -->
     <section class="cta-section fade-in">
         <div class="container">
             <div class="cta-content">
                 <h2>Ready to Transform Your Customer Success?</h2>
-                <p>Join 500+ companies using Success4 to reduce churn, accelerate growth, and create exceptional customer experiences with our complete platform.</p>
+                <p>Join one of the many companies using Success4 to reduce churn, accelerate growth, and create exceptional customer experiences with our complete platform.</p>
                 <div class="cta-buttons">
-                    <a href="#" class="hero-cta glow-on-hover">
+                    <!-- <a href="#" class="hero-cta glow-on-hover">
                         <i class="fas fa-rocket"></i>
                         Start Free Trial
-                    </a>
+                    </a> -->
                     <a href="#" class="secondary-cta">
                         <i class="fas fa-calendar"></i>
                         Book Demo Call
@@ -1786,47 +2428,45 @@
     </section>
 
     <!-- Footer -->
-    <footer class="footer">
+    <footer id="footer" class="footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
                     <h3>Success4</h3>
                     <p>Complete customer success platform with customizable tools, streamlined processes, and powerful integrations for sustainable growth.</p>
                     <div class="social-icons">
-                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="social-icon"><i class="fab fa-linkedin"></i></a>
-                        <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
-                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                        <!-- <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a> -->
+                        <a href="https://www.linkedin.com/company/success4-inc/" class="social-icon" target="_blank"><i class="fab fa-linkedin"></i></a>
+                        <!-- <a href="#" class="social-icon"><i class="fab fa-github"></i></a> -->
+                        <!-- <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a> -->
                     </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#how-it-works">How It Works</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="#roi-calculator">ROI Calculator</a></li>
+                    </ul>
                 </div>
                 <div class="footer-section">
                     <h3>Product</h3>
                     <ul>
-                        <li><a href="#">Features</a></li>
-                        <li><a href="#">Pricing</a></li>
-                        <li><a href="#">Integrations</a></li>
-                        <li><a href="#">API</a></li>
-                        <li><a href="#">Security</a></li>
+                        <li><a href="#features">Customer Success Tools</a></li>
+                        <li><a href="#features">Churn Prevention</a></li>
+                        <li><a href="#features">Customer Insights</a></li>
+                        <li><a href="#roi-calculator">Calculate Your Savings</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
-                    <h3>Company</h3>
+                    <h3>Contact & Support</h3>
                     <ul>
-                        <li><a href="#">About</a></li>
-                        <li><a href="#">Careers</a></li>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">Press</a></li>
-                        <li><a href="#">Partners</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h3>Support</h3>
-                    <ul>
-                        <li><a href="#">Help Center</a></li>
-                        <li><a href="#">Contact Us</a></li>
-                        <li><a href="#">Status</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="https://www.linkedin.com/company/success4-inc/" target="_blank">LinkedIn</a></li>
+                        <li><a href="#" class="footer-demo-link">Book a Demo</a></li>
+                        <li><a href="mailto:info@success4.com">Email Us</a></li>
+                        <li><a href="#home">Back to Top</a></li>
                     </ul>
                 </div>
             </div>
@@ -1836,6 +2476,40 @@
         </div>
     </footer>
 
+    <!-- Book Demo Modal -->
+    <div id="bookDemoModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Book a Demo</h2>
+            <p style="color: var(--text-gray); margin-bottom: 2rem;">Fill out the form below and we'll get in touch with you shortly.</p>
+            <form id="demoForm">
+                <div class="form-group">
+                    <label for="fullName">Full Name *</label>
+                    <input type="text" id="fullName" name="fullName" required>
+                </div>
+                <div class="form-group">
+                    <label for="companyName">Company Name *</label>
+                    <input type="text" id="companyName" name="companyName" required>
+                </div>
+                <div class="form-group">
+                    <label for="workEmail">Work Email *</label>
+                    <input type="email" id="workEmail" name="workEmail" required>
+                </div>
+                <button type="submit" class="submit-btn">Submit</button>
+           
+            </form>
+        </div>
+    </div>
+    <script type="text/javascript"
+    src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+    </script>
+    <script type="text/javascript">
+    (function(){
+     emailjs.init({
+    publicKey: "BmUaROCyJIU1W9KFv",
+    });
+    })();
+    </script>
     <script>
         // Particle System
         function createParticles() {
@@ -1913,13 +2587,12 @@
         function isElementInViewport(el, threshold = 0.1) {
             const rect = el.getBoundingClientRect();
             const windowHeight = window.innerHeight || document.documentElement.clientHeight;
-            const windowWidth = window.innerWidth || document.documentElement.clientWidth;
 
+            // Only check vertical position - ignore horizontal bounds
+            // This fixes issues with slide animations pushing elements outside viewport on mobile
             return (
                 rect.top <= windowHeight * (1 - threshold) &&
-                rect.bottom >= windowHeight * threshold &&
-                rect.left >= 0 &&
-                rect.right <= windowWidth
+                rect.bottom >= windowHeight * threshold
             );
         }
 
@@ -2191,12 +2864,35 @@
         });
 
         // Mobile menu toggle
-        document.getElementById('mobile-menu-btn')?.addEventListener('click', function() {
-            const navLinks = document.querySelector('.nav-links');
-            if (navLinks) {
-                navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
-            }
-        });
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const body = document.body;
+
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', function() {
+                const isActive = mobileMenu.classList.contains('active');
+
+                if (isActive) {
+                    mobileMenu.classList.remove('active');
+                    mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                    body.style.overflow = '';
+                } else {
+                    mobileMenu.classList.add('active');
+                    mobileMenuBtn.innerHTML = '<i class="fas fa-times"></i>';
+                    body.style.overflow = 'hidden';
+                }
+            });
+
+            // Close mobile menu when clicking on a link
+            const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+            mobileMenuLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    mobileMenu.classList.remove('active');
+                    mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                    body.style.overflow = '';
+                });
+            });
+        }
 
         // Add some performance optimization
         let ticking = false;
@@ -2210,6 +2906,102 @@
         window.addEventListener('scroll', function() {
             requestTick();
             ticking = false;
+        });
+
+        // Book Demo Modal functionality
+        const modal = document.getElementById('bookDemoModal');
+        const bookDemoButtons = document.querySelectorAll('.nav-cta, .secondary-cta, .footer-demo-link');
+        const closeModal = document.querySelector('.close-modal');
+        const demoForm = document.getElementById('demoForm');
+
+        // Open modal when Book Demo buttons are clicked
+        bookDemoButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                modal.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        // Close modal when X is clicked
+        closeModal?.addEventListener('click', function() {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Handle form submission
+        demoForm?.addEventListener('submit', function(e) {
+            const status = document.getElementById("status");
+            e.preventDefault();
+            const params = {
+      name: document.getElementById("fullName").value,
+      email: document.getElementById("workEmail").value,
+      companyname: document.getElementById("companyName").value,
+      
+    };
+
+            emailjs.send('service_0fly5bk', 'template_t29r9kh', params)
+        .then(() => {
+          // Close modal after submission
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            demoForm.reset();
+        }, (error) => {
+          alert('Failed to send message. Error: ' + JSON.stringify(error));
+        });
+
+
+        });
+
+        // Smooth scrolling for all anchor links (navigation and footer)
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                // Skip if this is a demo button (handled by modal)
+                if (this.classList.contains('nav-cta') || 
+                    this.classList.contains('secondary-cta') || 
+                    this.classList.contains('footer-demo-link')) {
+                    return;
+                }
+                
+                const href = this.getAttribute('href');
+                
+                // Handle empty hash or just '#'
+                if (href === '#' || href === '') {
+                    return;
+                }
+                
+                e.preventDefault();
+                
+                const targetId = href.substring(1);
+                const targetElement = document.getElementById(targetId);
+                
+                if (targetElement) {
+                    // Close mobile menu if open
+                    const mobileMenu = document.querySelector('.mobile-menu');
+                    if (mobileMenu && mobileMenu.classList.contains('active')) {
+                        mobileMenu.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    }
+                    
+                    // Calculate offset for fixed header
+                    const headerHeight = document.getElementById('header')?.offsetHeight || 80;
+                    const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+                    
+                    // Smooth scroll to target
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
         });
     </script>
 </body>

@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Block unnecessary folders (uncomment if applicable)
+# Disallow: /admin/
+# Disallow: /api/
+# Disallow: /private/
+
+Sitemap: https://success4.us/sitemap.xml
