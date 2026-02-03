@@ -126,7 +126,7 @@
         .nav-cta {
             background: var(--primary-blue);
             color: var(--primary-white);
-            padding: 0.75rem 1.5rem;
+            padding: 0.5rem 1.5rem;
             border-radius: 8px;
             text-decoration: none;
             font-weight: 600;
@@ -1691,8 +1691,8 @@
     <header class="header" id="header">
         <div class="container">
             <nav class="nav">
-                <a href="#" class="logo">
-                    <img src="s4Logo.webp" alt="Success4 Customer Success Platform Logo" style="height: 40px; width: auto;">
+                <a href="#" class="logo" style="display: flex; align-items: center;">
+                    <img src="s4Logo.webp" alt="Success4 Customer Success Platform Logo" style="height: 32px; width: auto;">
                 </a>
                 <ul class="nav-links">
                     <li><a href="#features">Features</a></li>
@@ -1889,7 +1889,7 @@
             <div style="position: relative; max-width: 1200px; margin: 0 auto; height: 600px; padding-top: 20px; overflow: visible;">
                 <!-- Left Card -->
                 <div class="floating-process-card slide-left" style="position: absolute; top: 50px; left: 0; width: 320px;">
-                    <div style="background: white; border-radius: 24px; padding: 2rem; box-shadow: 0 20px 40px rgba(0,0,0,0.08); position: relative; overflow: visible;">
+                    <div style="background: white; border-radius: 24px; padding: 2rem; box-shadow: 0 20px 40px rgba(0,0,0,0.08); position: relative; overflow: visible; display: flex; flex-direction: column; min-height: 390px;">
                         <!-- Automation Badge -->
                         <div style="position: absolute; top: -10px; left: 20px; background: linear-gradient(135deg, var(--primary-blue), #3B82F6); color: white; padding: 0.5rem 1rem; border-radius: 12px; font-size: 0.8rem; font-weight: 600; z-index: 10;">
                             90% Automation
@@ -1910,11 +1910,10 @@
 
                 <!-- Center Card -->
                 <div class="floating-process-card scale-in" style="position: absolute; top: 50px; left: 50%; transform: translateX(-50%); width: 320px; z-index: 2;">
-                    <div style="background: white; border-radius: 24px; padding: 2rem; box-shadow: 0 25px 50px rgba(0,0,0,0.12); position: relative; border: 2px solid rgba(29, 78, 216, 0.1); overflow: visible;">
+                    <div style="background: white; border-radius: 24px; padding: 2rem; box-shadow: 0 25px 50px rgba(0,0,0,0.12); position: relative; border: 2px solid rgba(29, 78, 216, 0.1); overflow: visible; display: flex; flex-direction: column; min-height: 390px;">
                         <!-- Pulse indicator -->
-                        <div style="position: absolute; top: 20px; right: 20px; width: 12px; height: 12px; background: #10B981; border-radius: 50%; animation: pulse 2s ease-in-out infinite;">
-                            <div style="position: absolute; top: -4px; left: -4px; width: 20px; height: 20px; background: rgba(16, 185, 129, 0.3); border-radius: 50%; animation: pulse 2s ease-in-out infinite 0.5s;"></div>
-                        </div>
+                        <!-- <div style="position: absolute; top: 20px; right: 20px; width: 12px; height: 12px; background: #10B981; border-radius: 50%; animation: pulse 2s ease-in-out infinite;">
+                        </div> -->
 
                         <!-- Animated Dashboard -->
                         <div style="margin: 2rem 0; height: 150px; background: linear-gradient(135deg, #f8fafc, #e2e8f0); border-radius: 16px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
@@ -1930,7 +1929,7 @@
 
                 <!-- Right Card -->
                 <div class="floating-process-card slide-right" style="position: absolute; top: 50px; right: 0; width: 320px;">
-                    <div style="background: white; border-radius: 24px; padding: 2rem; box-shadow: 0 20px 40px rgba(0,0,0,0.08); position: relative; overflow: visible;">
+                    <div style="background: white; border-radius: 24px; padding: 2rem; box-shadow: 0 20px 40px rgba(0,0,0,0.08); position: relative; overflow: visible; display: flex; flex-direction: column; min-height: 390px;">
 
                         <!-- User avatars -->
                         <div style="margin: 2rem 0; display: flex; justify-content: center; align-items: center; gap: 1rem; height: 150px; position: relative;">
@@ -2274,7 +2273,7 @@
 
                 <div class="slide-right" style="text-align: center;">
                     <div style="background: linear-gradient(135deg, var(--primary-blue), #3B82F6); padding: 3rem; border-radius: 20px; color: white; position: relative;">
-                        <div style="position: absolute; top: 10px; right: 15px; width: 60px; height: 60px; border: 2px solid rgba(255,255,255,0.2); border-radius: 50%; animation: rotate 10s linear infinite;"></div>
+                        <!-- <div style="position: absolute; top: 10px; right: 15px; width: 60px; height: 60px; border: 2px solid rgba(255,255,255,0.2); border-radius: 50%; animation: rotate 10s linear infinite;"></div> -->
                         <h4 style="font-size: 1.5rem; font-weight: 600; margin-bottom: 2rem;">Automated Customer Success</h4>
                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
                             <div>
